@@ -1,0 +1,36 @@
+#interactivemap{
+    top: 0px;
+    left: 0px;
+}
+
+#main-body{
+    background-color: #121212;
+}
+
+#spotify{
+background-color: black;
+
+}
+
+#spotifyplayer{
+background-color: blue;
+
+}
+
+#artistinfo{
+background-color: cornflowerblue;
+
+}
+
+
+.flex-container {
+    display: flex;
+}
+
+.flex-child {
+    flex: 1;
+}  
+
+.flex-child:first-child {
+    
+} 

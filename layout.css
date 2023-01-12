@@ -4,25 +4,39 @@
 }
 
 #main-body{
-    background-color: #121212;
+    background-color: #272727;
 }
 
 #spotify{
-background-color: black;
+background-color: #272727;
+overflow-y:auto;
+height: 95%;
+position: absolute;
 
 }
 
 #spotifyplayer{
-background-color: blue;
+background-color:black;
+height: 20%;
+position: absolute;
+top: 95%;
 
 }
 
 #artistinfo{
 background-color: cornflowerblue;
+height: 5%;
+top: 95%;
+}
 
+.logo{
+    z-index: 9;
+    max-width: 200px;
+    position: absolute;
 }
 
 
+/*FLEX Container */
 .flex-container {
     display: flex;
 }
@@ -34,3 +48,32 @@ background-color: cornflowerblue;
 .flex-child:first-child {
     
 } 
+
+
+.LunqxlFIupJw_Dkx6mNx {
+    --card-container-border-radius: clamp(4px,(var(--column-width,0px) - 32px) * 0.025,8px);
+    -webkit-box-flex: 1;
+    background: #181818;
+    border-radius: calc(var(--card-container-border-radius) + 2px);
+    -ms-flex: 1;
+    flex: 1;
+    isolation: isolate;
+    padding: 16px;
+    position: relative;
+    -webkit-transition: background-color .3s ease;
+    transition: background-color .3s ease;
+    width: 100%;
+  }
+
+  .XiVwj5uoqqSFpS4cYOC6 {
+    height: 100%;
+  }
+
+  .xBV4XgMq0gC5lQICFWY_ {
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  element {
+    --card-color: #004020;
+  }

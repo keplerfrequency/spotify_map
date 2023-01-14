@@ -6,6 +6,12 @@
     <link rel="stylesheet" type="text/css" href="includes/style.css" media="all" />
     <link rel="stylesheet" type="text/css" href="layout.css" media="all" />
     
+    <script src="app.js"></script>
+    <script>
+      window.onload = function() {
+        displayPlaylists("playlists");
+      }
+    </script>
 
 </head>
 
@@ -75,29 +81,7 @@
 
     <div id="spotify" id >
             <div id="demo-agents">
-                <ul>
-                    <li id="france">
-                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DWXLbJb1PtkXq?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                    </li>
-
-                    <li id="netherlands">
-                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DWWu1NXpHyPJK?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>                     
-                    </li>
-
-                    <li id="portugal" >
-                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DWTXFWnuwReqb?utm_source=generator&theme=0" width="100%" height="200" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX81SpMyxQtv5?utm_source=generator&theme=0" width="100%" height="200" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX17E3cXq3hn3?utm_source=generator&theme=0" width="100%" height="200" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DXbCopOlsBnv4?utm_source=generator&theme=0" width="100%" height="200" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DWYjjOmuB9ehg?utm_source=generator&theme=0" width="100%" height="200" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-
-                </li>
-
-                <li id="spain">
-                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DWU4xtX4v6Z9l?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe> 
-                 </li> 
-
-                </ul>
+                <ul id="playlists" class="playlists"></ul>
             </div>
         </div>
         
@@ -146,9 +130,9 @@
         </div>
 
 
-        <div id="artistinfo">
-            artist info!
-        </div>
+        <!--<div id="artistinfo">
+            
+        </div> -->
 
     </div>
 
@@ -158,6 +142,7 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- CSSMap SCRIPT -->
     <script type="text/javascript" src="https://cssmapsplugin.com/5/jquery.cssmap.min.js"></script>
+    
     
     <script type="text/javascript">
         $(document).ready(function(){

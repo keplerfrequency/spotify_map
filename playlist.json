@@ -1,0 +1,65 @@
+{
+    "countries": [
+        {
+            "country": "netherlands",
+            "playlists": [
+              {
+                "link": "https://open.spotify.com/playlist/37i9dQZF1DXddFXwrHAcsz?si=f5cbb4a93a394ef3",
+                "playlist_by": "Spotify"
+              },
+              {
+                "link": "https://open.spotify.com/playlist/37i9dQZF1DXaQpIUzyByme?si=36079b5e041541e2",
+                "playlist_by": "Spotify"
+              }
+            ]
+          },
+      
+      
+      
+        {
+        "country": "portugal",
+        "playlists": [
+          {
+            "link": "https://open.spotify.com/playlist/37i9dQZF1DWTXFWnuwReqb?si=5d3478d553f24628",
+            "playlist_by": "Spotify"
+          },
+          {
+            "link": "https://open.spotify.com/playlist/37i9dQZF1DX81SpMyxQtv5?si=6771c38bac114cbc",
+            "playlist_by": "Spotify"
+          },
+          {
+            "link": "https://open.spotify.com/playlist/37i9dQZF1DX17E3cXq3hn3?si=1685b59e5ada436b",
+            "playlist_by": "Spotify"
+          },
+          {
+            "link": "https://open.spotify.com/playlist/37i9dQZF1DXbCopOlsBnv4?si=4672e1844a2c4448",
+            "playlist_by": "Spotify"
+          }
+        ]
+      },
+      
+      {
+        "country": "spain",
+        "playlists": [
+          {
+            "link": "https://open.spotify.com/playlist/37i9dQZF1DWU4xtX4v6Z9l?si=ee68abdc90fd496e",
+            "playlist_by": "Spotify"
+          },
+          {
+            "link": "https://open.spotify.com/playlist/37i9dQZF1DWXm9R2iowygp?si=6986c89ba4a3465b",
+            "playlist_by": "Spotify"
+          },
+          {
+            "link": "https://open.spotify.com/playlist/37i9dQZF1DXb0AsvHMF4aM?si=5705e1cd60e24e56",
+            "playlist_by": "Spotify"
+          },
+          {
+            "link": "https://open.spotify.com/playlist/37i9dQZF1DX7alvT6zKWrM?si=035cdc0ab89f4bea",
+            "playlist_by": "Spotify"
+          }
+        ]
+      }
+
+    ]
+  }
+  

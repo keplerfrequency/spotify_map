@@ -8,11 +8,11 @@
 }
 
 #spotify{
-background-color: #272727;
-overflow-y:auto;
-height: 95%;
-position: absolute;
-
+  background-color: #272727;
+  overflow-y:auto;
+  height: 100%;
+  position: absolute;
+  width: 100%;
 }
 
 #spotifyplayer{
@@ -25,9 +25,10 @@ top: 95%;
 
 #artistinfo{
 background-color: cornflowerblue;
-height: 5%;
+height:5%;
 top: 95%;
 }
+
 
 .logo{
     z-index: 9;
@@ -44,10 +45,6 @@ top: 95%;
 .flex-child {
     flex: 1;
 }  
-
-.flex-child:first-child {
-    
-} 
 
 
 .LunqxlFIupJw_Dkx6mNx {

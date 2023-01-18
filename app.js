@@ -16,7 +16,7 @@ function displayPlaylists(id) {
           
           for (var j = 0; j < playlists.length; j++) {
             var link = playlists[j].link;
-            var newLink = link.replace("open.spotify.com/playlist/", "open.spotify.com/embed/playlist/").concat("?utm_source=generator&theme=0")
+            var newLink = link.replace("open.spotify.com/playlist/", "open.spotify.com/embed/playlist/").concat("?utm_source=generator")
             var iframe = document.createElement("iframe");
             iframe.setAttribute("style","border-radius:12px");
             iframe.setAttribute("src",newLink);

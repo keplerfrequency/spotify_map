@@ -14,8 +14,8 @@ OUTPUT_JSON = "test_output_playlists.json"
 #Playlist.json file is where all the playlists are stored. the temp is a temp file that then overwrites the other one
 PLAYLIST_JSON = "playlist.json"
 TEMP_PLAYLIST_JSON = "temp_playlist.json"
-NUMBER_OF_PLAYLISTS = 15
-PLAYLIST_METADATA = 4
+NUMBER_OF_PLAYLISTS = 40
+PLAYLIST_METADATA = 5
 
 #Do a search of the playslists
 def get_playlists(query, type, limit, market):
@@ -29,14 +29,13 @@ def get_playlists(query, type, limit, market):
             response = spotify.search(query, limit, 0, type, market)
             print(" has succeeded")
         except Exception as e:
-            response="failed response"
-            print(" has failed")
+            response = ""
             print(e)
             pass
             
         return response
     else:
-        print("{} failed. Check support for market".format(query))
+        print("has failed. Check support for market")
         return
      
 
@@ -56,15 +55,8 @@ def request_playlist(country):
     playlists = get_playlists(country, type, limit, market)
     
     #Dump response in json file with all playlists found for country
-    #if no response just create an empty file
-    if playlists == "failed response":
-        try:
-            os.mknod(OUTPUT_JSON)
-        except:
-            pass
-    else:
-        with open(OUTPUT_JSON, "w") as outfile:
-            json.dump(playlists, outfile)
+    with open(OUTPUT_JSON, "w") as outfile:
+        json.dump(playlists, outfile)
 
     return
 
@@ -93,11 +85,11 @@ def go_through_response(country):
         #List by name so that similalry named lists appear together (BROKEN)
         #list_of_playlists=np.sort(list_of_playlists, axis=1)
     
-    except:
-        pass
+    except Exception as e:
+        print(e)
 
     f.close()
-
+    
     #repsonse from the country no longer needed, can tehrefore be deleted 
     if os.path.exists(OUTPUT_JSON):
         os.remove(OUTPUT_JSON)
@@ -110,21 +102,25 @@ def fill_playlist_json(list_of_all_playlists):
     json_schema = {
         "countries": []
         }
-
-    with open(TEMP_PLAYLIST_JSON, 'a') as json_file:
-        for row in range(np.shape(list_of_all_playlists)[0]):
-            country = {
-                "country": list_of_all_playlists[row, 0],
-                "playlists": [{
-                    "link": list_of_all_playlists[row, 1],
-                    "playlist_by": list_of_all_playlists[row, 2],
-                    "name": list_of_all_playlists[row, 3],
-                    "img": list_of_all_playlists[row, 4]
-                }]
-            }
-            json_schema['countries'].append(country)
-        json.dump(json_schema, json_file, indent=4, separators=(',', ': '))
     
+    try:
+        with open(TEMP_PLAYLIST_JSON, 'a') as json_file:
+            for row in range(np.shape(list_of_all_playlists)[0]):
+                country = {
+                    "country": list_of_all_playlists[row, 0],
+                    "playlists": [{
+                        "link": list_of_all_playlists[row, 1],
+                        "playlist_by": list_of_all_playlists[row, 2],
+                        "name": list_of_all_playlists[row, 3],
+                        "img": list_of_all_playlists[row, 4]
+                    }]
+                }
+                json_schema['countries'].append(country)
+            json.dump(json_schema, json_file, indent=4, separators=(',', ': '))
+    
+    except Exception as e:
+        print(e)
+
     return
 
 def main():
@@ -141,7 +137,6 @@ def main():
 
         playlists = go_through_response(country)
         
-        #print(playlists)
         list_of_all_playlists = np.vstack((list_of_all_playlists, playlists))
 
         #Remove line of nones
@@ -160,12 +155,6 @@ def main():
     if os.path.exists(TEMP_PLAYLIST_JSON):
         shutil.copyfile(TEMP_PLAYLIST_JSON, PLAYLIST_JSON)    
         os.remove(TEMP_PLAYLIST_JSON)
-    
-
-
-
-
-
     
     
    

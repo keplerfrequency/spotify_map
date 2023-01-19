@@ -6,29 +6,39 @@ import numpy as np
 import os
 import shutil
 
+#Get this here: https://developer.spotify.com/dashboard/applications
 CLIENT_ID = '948c4e2f99254fcdbf7e8f9779da03b6'
-CLIENT_SECRET = 'f1805609facd442197c8520f6152ae11'
+CLIENT_SECRET = '31711ce22be54da09b8aabe950c42b09'
+#Output JSON is where the response from spotify is temporarily stored and then removed 
 OUTPUT_JSON = "test_output_playlists.json"
+#Playlist.json file is where all the playlists are stored. the temp is a temp file that then overwrites the other one
 PLAYLIST_JSON = "playlist.json"
 TEMP_PLAYLIST_JSON = "temp_playlist.json"
 NUMBER_OF_PLAYLISTS = 15
+PLAYLIST_METADATA = 4
 
 #Do a search of the playslists
 def get_playlists(query, type, limit, market):
 
-    spotify = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, ))
+    spotify = spotipy.Spotify(requests_timeout=10, client_credentials_manager=SpotifyClientCredentials(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, ))
 
     valid_markets = ["AD","AE","AG","AL","AM","AO","AR","AT","AU","AZ","BA","BB","BD","BE","BF","BG","BH","BI","BJ","BN","BO","BR","BS","BT","BW","BY","BZ","CA","CD","CG","CH","CI","CL","CM","CO","CR","CV","CW","CY","CZ","DE","DJ","DK","DM","DO","DZ","EC","EE","EG","ES","ET","FI","FJ","FM","FR","GA","GB","GD","GE","GH","GM","GN","GQ","GR","GT","GW","GY","HK","HN","HR","HT","HU","ID","IE","IL","IN","IQ","IS","IT","JM","JO","JP","KE","KG","KH","KI","KM","KN","KR","KW","KZ","LA","LB","LC","LI","LK","LR","LS","LT","LU","LV","LY","MA","MC","MD","ME","MG","MH","MK","ML","MN","MO","MR","MT","MU","MV","MW","MX","MY","MZ","NA","NE","NG","NI","NL","NO","NP","NR","NZ","OM","PA","PE","PG","PH","PK","PL","PS","PT","PW","PY","QA","RO","RS","RW","SA","SB","SC","SE","SG","SI","SK","SL","SM","SN","SR","ST","SV","SZ","TD","TG","TH","TJ","TL","TN","TO","TR","TT","TV","TW","TZ","UA","UG","US","UY","UZ","VC","VE","VN","VU","WS","XK","ZA","ZM","ZW"]
 
     if market in valid_markets:
         try:
             response = spotify.search(query, limit, 0, type, market)
-        except:
+            print(" has succeeded")
+        except Exception as e:
+            response="failed response"
+            print(" has failed")
+            print(e)
             pass
+            
         return response
     else:
         print("{} failed. Check support for market".format(query))
         return
+     
 
 #Get the playlists from a country
 def request_playlist(country):
@@ -40,39 +50,57 @@ def request_playlist(country):
     codes = pycountry.countries.search_fuzzy(country)
     market = str(codes)[18] + str(codes)[19]
     
-    print("{} {}".format(market, country))
+    print("{} {}".format(market, country), end="")
     
     #Actually perform search
     playlists = get_playlists(country, type, limit, market)
-
+    
     #Dump response in json file with all playlists found for country
-    with open(OUTPUT_JSON, "w") as outfile:
-        json.dump(playlists, outfile)
+    #if no response just create an empty file
+    if playlists == "failed response":
+        try:
+            os.mknod(OUTPUT_JSON)
+        except:
+            pass
+    else:
+        with open(OUTPUT_JSON, "w") as outfile:
+            json.dump(playlists, outfile)
 
     return
 
-
+#Process the response retrieved by Spotify
 def go_through_response(country):
     
     #open file where the playlist is for country X and load in JSON
     f = open(OUTPUT_JSON)
-    data = json.load(f)
 
     #Initialize list of playlists for country X
-    list_of_playlists=[None]*4
+    list_of_playlists=[None]*PLAYLIST_METADATA
 
-    for item in data['playlists']['items']:
-        urls = item["external_urls"]['spotify']
-        display_name = item["owner"]["display_name"]
-        name= item["name"]
+    try:
+        data = json.load(f)
 
-        array = [country, urls, display_name, name]
-        list_of_playlists = np.vstack((array, list_of_playlists))
-        
-    #List by name so that similalry named lists appear together (BROKEN)
-    #list_of_playlists=np.sort(list_of_playlists, axis=1)
+        #See response format here: https://developer.spotify.com/console/get-search-item/
+        for item in data['playlists']['items']:
+            urls = item["external_urls"]['spotify']
+            display_name = item["owner"]["display_name"]
+            name= item["name"]
+            img = item["images"][0]['url']
+            
+            array = [country, urls, display_name, name, img]
+            list_of_playlists = np.vstack((array, list_of_playlists))
+            
+        #List by name so that similalry named lists appear together (BROKEN)
+        #list_of_playlists=np.sort(list_of_playlists, axis=1)
     
+    except:
+        pass
+
     f.close()
+
+    #repsonse from the country no longer needed, can tehrefore be deleted 
+    if os.path.exists(OUTPUT_JSON):
+        os.remove(OUTPUT_JSON)
 
     return list_of_playlists
 
@@ -90,7 +118,8 @@ def fill_playlist_json(list_of_all_playlists):
                 "playlists": [{
                     "link": list_of_all_playlists[row, 1],
                     "playlist_by": list_of_all_playlists[row, 2],
-                    "name": list_of_all_playlists[row, 3]
+                    "name": list_of_all_playlists[row, 3],
+                    "img": list_of_all_playlists[row, 4]
                 }]
             }
             json_schema['countries'].append(country)
@@ -102,10 +131,8 @@ def main():
 
     #Countries
     europe_countries = ["albania","andorra","austria","belarus","belgium","bosnia","bulgaria","croatia","cyprus","czech republic","denmark","estonia","france","finland","georgia","germany","greece","hungary","iceland","ireland","san marino","italy","kosovo","latvia","liechtenstein","lithuania","luxembourg","macedonia","malta", "moldova","monaco","montenegro","netherlands","norway","poland","portugal","romania","russia","serbia","slovakia","slovenia","spain","sweden","switzerland","turkey","ukraine","united kingdom"]
-    #no russia
-    europe_countries = ["albania","andorra","austria","belarus","belgium","bosnia","bulgaria","croatia","cyprus","czech republic","denmark","estonia","france","finland","georgia","germany","greece","hungary","iceland","ireland","san marino","italy","kosovo","latvia","liechtenstein","lithuania","luxembourg","macedonia","malta", "moldova","monaco","montenegro","netherlands","norway","poland","portugal","romania","serbia","slovakia","slovenia","spain","sweden","switzerland","turkey","ukraine","united kingdom"]
     
-    list_of_all_playlists=[None]*4
+    list_of_all_playlists=[None]*PLAYLIST_METADATA
 
     for country in europe_countries:
         

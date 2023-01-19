@@ -1,4 +1,4 @@
-function displayPlaylists(id) {
+/* function displayPlaylists(id) {
     fetch("playlist.json")
       .then(response => response.json())
       .then(json => {
@@ -31,5 +31,25 @@ function displayPlaylists(id) {
           }
         }
       });
-  }
-  
+  } */
+
+
+function displayPlaylists(id){
+  fetch('playlist.json')
+  .then(response => response.json())
+  .then(data => {
+    data.countries.forEach(country => {
+      country.playlists.forEach(playlist => {
+        const box = document.createElement('li');
+        box.setAttribute("id",country.country);
+        /* const img = document.createElement('img');
+        img.src = playlist.link; */
+        const text = document.createElement('p');
+        text.innerText = playlist.name;
+        /*box.appendChild(img); */
+        box.appendChild(text);
+        document.getElementById(id).appendChild(box);
+      });
+    });
+  });
+}

@@ -33,23 +33,42 @@
       });
   } */
 
-
-function displayPlaylists(id){
-  fetch('playlist.json')
-  .then(response => response.json())
-  .then(data => {
-    data.countries.forEach(country => {
-      country.playlists.forEach(playlist => {
-        const box = document.createElement('li');
-        box.setAttribute("id",country.country);
-        /* const img = document.createElement('img');
-        img.src = playlist.link; */
-        const text = document.createElement('p');
-        text.innerText = playlist.name;
-        /*box.appendChild(img); */
-        box.appendChild(text);
-        document.getElementById(id).appendChild(box);
+// This fcuntion creates the plalist cards for every playlist
+  function displayPlaylists(id){
+    fetch('playlist.json')
+    .then(response => response.json())
+    .then(data => {
+      data.countries.forEach(country => {
+        country.playlists.forEach(playlist => {
+          const box = document.createElement('li');
+          box.setAttribute("class", "playlist_card")
+          box.setAttribute("id",country.country);
+  
+          const a = document.createElement('a');
+          a.href = playlist.link;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+  
+          const img = document.createElement('img');
+          img.src = playlist.img;
+          a.appendChild(img);
+          box.appendChild(a);
+  
+          const text = document.createElement('p');
+          text.innerText = playlist.name;
+          const text1 = document.createElement('p1');
+          text1.innerText = playlist.playlist_by;
+          box.appendChild(text);
+          box.appendChild(text1);
+          document.getElementById(id).appendChild(box);
+        });
       });
     });
-  });
-}
+  }
+
+//This function resizes all the images from the playlists
+
+
+
+
+

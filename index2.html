@@ -5,7 +5,8 @@
     <link rel="stylesheet" type="text/css" href="cssmap-europe/cssmap-europe.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="includes/style.css" media="all" />
     <link rel="stylesheet" type="text/css" href="layout.css" media="all" />
-    
+    <link rel="stylesheet" type="text/css" href="switch.css" media="all" />
+
     <script src="app.js"></script>
     <script>
       window.onload = function() {
@@ -76,72 +77,92 @@
             <li class="eu52"><a href="#wales">Wales</a></li>-->
             </ul>
         </div>
+
+        <div class="switch-container">
+            <div class="toggle-container">
+                <span class="switch_label">Spotify lists</span>
+                <label class="switch" id="toggle-button-spotify">
+                    <input type="checkbox" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="toggle-container">
+                <span class="switch_label">User lists</span>
+                <label class="switch" id="toggle-button-user">
+                    <input type="checkbox" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        
+          
+        
     </div>
 
     <div class="flex-child right">
 
-    <div id="spotify" id >
-            <div id="demo-agents">
-                
-                <script src="app.js"></script>
-                <script>
-                //call the function 
-                resizeImages();
-                </script>
-                <ul id="playlists" class="playlists"></ul>
+        <div id="spotify" id >
+                <div id="demo-agents">
+                    
+                    <script src="app.js"></script>
+                    <script>
+                    //call the function 
+                    resizeImages();
+                    </script>
+                    <ul id="playlists" class="playlists"></ul>
+                </div>
             </div>
-        </div>
-        
+            
 
-        <div id="spotifyplayerbeta">
-            <script src="https://sdk.scdn.co/spotify-player.js"></script>
-            <script>
-            window.onSpotifyWebPlaybackSDKReady = () => {
-                const token = 'BQCAp9r62Wr-vWwyreZgsEtI9BaqQQAyarAyBGBNjKAZRUw0z7uVLrsgQt11NqaWef0YqGEnZo2pYnqt66nRbzQU6FUakb0yXBhtomeBiGmNFdvZiXmYllY86YxwYY0e6cfUPg12xnPrXeavZVXiPWEDb_VOxFW_nlLTvRgywSQxblyRA5oEpvMHlGAE83Xd';
-                const player = new Spotify.Player({
-                  name: 'Spotify map',
-                  getOAuthToken: cb => { cb(token); },
-                  volume: 0.5
+            <div id="spotifyplayerbeta">
+                <script src="https://sdk.scdn.co/spotify-player.js"></script>
+                <script>
+                window.onSpotifyWebPlaybackSDKReady = () => {
+                    const token = 'BQCAp9r62Wr-vWwyreZgsEtI9BaqQQAyarAyBGBNjKAZRUw0z7uVLrsgQt11NqaWef0YqGEnZo2pYnqt66nRbzQU6FUakb0yXBhtomeBiGmNFdvZiXmYllY86YxwYY0e6cfUPg12xnPrXeavZVXiPWEDb_VOxFW_nlLTvRgywSQxblyRA5oEpvMHlGAE83Xd';
+                    const player = new Spotify.Player({
+                    name: 'Spotify map',
+                    getOAuthToken: cb => { cb(token); },
+                    volume: 0.5
+                    });
+                
+                // Ready
+                player.addListener('ready', ({ device_id }) => {
+                    console.log('Ready with Device ID', device_id);
                 });
-            
-            // Ready
-            player.addListener('ready', ({ device_id }) => {
-                console.log('Ready with Device ID', device_id);
-            });
 
-            // Not Ready
-            player.addListener('not_ready', ({ device_id }) => {
-                console.log('Device ID has gone offline', device_id);
-            });
+                // Not Ready
+                player.addListener('not_ready', ({ device_id }) => {
+                    console.log('Device ID has gone offline', device_id);
+                });
 
-            player.addListener('initialization_error', ({ message }) => {
-                console.error(message);
-            });
+                player.addListener('initialization_error', ({ message }) => {
+                    console.error(message);
+                });
 
-            player.addListener('authentication_error', ({ message }) => {
-                console.error(message);
-            });
+                player.addListener('authentication_error', ({ message }) => {
+                    console.error(message);
+                });
 
-            player.addListener('account_error', ({ message }) => {
-                console.error(message);
-            });
+                player.addListener('account_error', ({ message }) => {
+                    console.error(message);
+                });
 
-            document.getElementById('togglePlay').onclick = function() {
-              player.togglePlay();
-            };
+                document.getElementById('togglePlay').onclick = function() {
+                player.togglePlay();
+                };
 
-            player.connect();
-            }
-            </script>
-              
+                player.connect();
+                }
+                </script>
+                
+            </div>
+
+
+            <!--<div id="artistinfo">
+                
+            </div> -->
+
         </div>
-
-
-        <!--<div id="artistinfo">
-            
-        </div> -->
-
-    </div>
 
 
 

@@ -15,6 +15,9 @@ Todo:
     ☐ 960
     ☐ 1280
     ☐ 1450
+  ☐ remover barra do lado
+  ☐ fazer crop a imagens
+
     
   Funcao:
   ✔ fazer com que painel do pais mude dinamaicamente (e nao permanente) @done(23-01-12 19:08)
@@ -24,6 +27,9 @@ Todo:
     ☐ criador (spotify vs non-spotify)
     ☐ estilo de musica (?)
   ✔ por playlists dinamicamente do json file @done(23-01-14 18:58)
+☐ adicionar descricao da playlist
+ver de paises que nao funcionaram (GB, bosnia, CZ)
+
 
   
 

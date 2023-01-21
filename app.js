@@ -60,13 +60,42 @@
           text1.innerText = playlist.playlist_by;
           box.appendChild(text);
           box.appendChild(text1);
+
+          box.dataset.playlistBy = playlist.playlist_by;
+
           document.getElementById(id).appendChild(box);
         });
       });
     });
   }
 
-//This function resizes all the images from the playlists
+//This function will toggle the spotify playlists
+document.addEventListener('DOMContentLoaded', function(){
+  const toggleButton = document.getElementById("toggle-button-spotify").querySelector('input');
+  const playlistByValue = "Spotify";
+
+  toggleButton.addEventListener("change", function() {
+    const elements = document.querySelectorAll(`[data-playlist-by='${playlistByValue}']`);
+    elements.forEach(function(element) {
+      element.classList.toggle("hidden", !this.checked);
+    }.bind(this));
+  });
+});
+
+//This function toggles the non spotify playlists
+document.addEventListener('DOMContentLoaded', function(){
+  const toggleButton = document.getElementById("toggle-button-user").querySelector('input');
+  const playlistByValue = "Spotify";
+
+  toggleButton.addEventListener("change", function() {
+    const elements = document.querySelectorAll(`[data-playlist-by]:not([data-playlist-by='${playlistByValue}'])`);
+    elements.forEach(function(element) {
+      element.classList.toggle("hidden", !this.checked);
+    }.bind(this));
+  });
+});
+
+
 
 
 

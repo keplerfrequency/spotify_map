@@ -15,7 +15,7 @@ OUTPUT_JSON = "test_output_playlists.json"
 PLAYLIST_JSON = "playlist.json"
 TEMP_PLAYLIST_JSON = "temp_playlist.json"
 NUMBER_OF_PLAYLISTS = 40
-PLAYLIST_METADATA = 5
+PLAYLIST_METADATA = 6
 
 #Do a search of the playslists
 def get_playlists(query, type, limit, market):
@@ -32,12 +32,18 @@ def get_playlists(query, type, limit, market):
             response = ""
             print(e)
             pass
-            
-        return response
+    
     else:
-        print("has failed. Check support for market")
-        return
+        print("has no market support. Will try with no market", end="")
+        try:
+            response = spotify.search(query, limit, 0, type, market)
+            print(" Success!")
+        except Exception as e:
+            response = ""
+            print(e)
+            pass
      
+    return response
 
 #Get the playlists from a country
 def request_playlist(country):
@@ -78,8 +84,9 @@ def go_through_response(country):
             display_name = item["owner"]["display_name"]
             name= item["name"]
             img = item["images"][0]['url']
+            description =  item["description"]
             
-            array = [country, urls, display_name, name, img]
+            array = [country, urls, display_name, name, img, description]
             list_of_playlists = np.vstack((array, list_of_playlists))
             
         #List by name so that similalry named lists appear together (BROKEN)
@@ -112,7 +119,8 @@ def fill_playlist_json(list_of_all_playlists):
                         "link": list_of_all_playlists[row, 1],
                         "playlist_by": list_of_all_playlists[row, 2],
                         "name": list_of_all_playlists[row, 3],
-                        "img": list_of_all_playlists[row, 4]
+                        "img": list_of_all_playlists[row, 4],
+                        "description": list_of_all_playlists[row, 5]
                     }]
                 }
                 json_schema['countries'].append(country)

@@ -62,6 +62,7 @@
           box.appendChild(text1);
 
           box.dataset.playlistBy = playlist.playlist_by;
+          box.dataset.description = playlist.description;
 
           document.getElementById(id).appendChild(box);
         });
@@ -82,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function(){
   });
 });
 
-//This function toggles the non spotify playlists
+//This function toggles the non user playlists
 document.addEventListener('DOMContentLoaded', function(){
   const toggleButton = document.getElementById("toggle-button-user").querySelector('input');
   const playlistByValue = "Spotify";

@@ -4,7 +4,9 @@
   position: absolute;
   z-index: 8;
   top: 50%;
+  width: 52px;
 }
+
 
 .switch {
   position: relative;
@@ -20,22 +22,17 @@
   height: 0;
 }
 
-.toggle-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .switch_label {
+  white-space: nowrap;
   position: absolute;
-  top: -20px;
-  left: 50px;
+  left: 120%;
+  top: -3px;
   color: white;
+  padding-top:10px;
 }
 
 
-
+/* Slider details*/
 .slider {
   position: absolute;
   cursor: pointer;
@@ -83,15 +80,9 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-.switch_label{
-    position: absolute;
-    color: white;
-    right: 50px;
-    top: 50%;
-    transform: translateY(-50%);
-}
 
 
+/* Hide the unselected playslists*/
 .hidden {
   display: none;
 }

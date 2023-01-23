@@ -100,10 +100,10 @@ def go_through_response(country):
                 except:
                     img = "https://storage.googleapis.com/pr-newsroom-wp/1/2023/01/AppleCompetition-FTRHeader_V1-1-300x171.png"
             if 'description' in item:
-                try:
-                    description =  item["description"] 
-                except:
+                description =  item["description"]
+                if description == "":
                     description = "No description"
+
 
             array = [country, urls, display_name, name, img, description]
 

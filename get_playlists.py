@@ -34,10 +34,10 @@ def get_playlists(query, type, limit, market):
             pass
     
     else:
-        print("has no market support. Will try with no market", end="")
+        print("has no market support. Will try with no market.", end="")
         try:
-            response = spotify.search(query, limit, 0, type, market)
-            print(" Success!")
+            response = spotify.search(query, limit, 0, type)
+            print(" {} has succeeded".format(query))
         except Exception as e:
             response = ""
             print(e)
@@ -51,13 +51,16 @@ def request_playlist(country):
     type = "playlist"
     limit = NUMBER_OF_PLAYLISTS
         
-    #Get country code for coutnry. needed for market search 
-    codes = pycountry.countries.search_fuzzy(country)
-    market = str(codes)[18] + str(codes)[19]
+    #Get country code for country. Needed for market search 
+    try:
+        codes = pycountry.countries.search_fuzzy(country)
+        market = str(codes)[18] + str(codes)[19]
+        print("{} {}".format(market, country), end="")
+    except:
+        print("   {} has no country code".format(country), end="")
+        market = ""
     
-    print("{} {}".format(market, country), end="")
-    
-    #Actually perform search
+    #Perform search
     playlists = get_playlists(country, type, limit, market)
     
     #Dump response in json file with all playlists found for country
@@ -68,7 +71,10 @@ def request_playlist(country):
 
 #Process the response retrieved by Spotify
 def go_through_response(country):
-    
+
+    #Substitute empty spaces with "-" so that map can access them properly
+    country = country.replace(" ", "-")
+
     #open file where the playlist is for country X and load in JSON
     f = open(OUTPUT_JSON)
 
@@ -80,13 +86,27 @@ def go_through_response(country):
 
         #See response format here: https://developer.spotify.com/console/get-search-item/
         for item in data['playlists']['items']:
-            urls = item["external_urls"]['spotify']
-            display_name = item["owner"]["display_name"]
-            name= item["name"]
-            img = item["images"][0]['url']
-            description =  item["description"]
-            
+            if 'external_urls' in item:
+                urls = item["external_urls"]['spotify']
+            if 'owner' in item:
+                display_name = item["owner"]["display_name"]
+            if 'name' in item:
+                name= item["name"]
+
+            #these are not obligatory, so should check if they are there
+            if 'images' in item:
+                try:
+                    img = item["images"][0]['url']
+                except:
+                    img = "https://storage.googleapis.com/pr-newsroom-wp/1/2023/01/AppleCompetition-FTRHeader_V1-1-300x171.png"
+            if 'description' in item:
+                try:
+                    description =  item["description"] 
+                except:
+                    description = "No description"
+
             array = [country, urls, display_name, name, img, description]
+
             list_of_playlists = np.vstack((array, list_of_playlists))
             
         #List by name so that similalry named lists appear together (BROKEN)
@@ -94,6 +114,7 @@ def go_through_response(country):
     
     except Exception as e:
         print(e)
+        
 
     f.close()
     
@@ -103,7 +124,7 @@ def go_through_response(country):
 
     return list_of_playlists
 
-
+#Fill in purpose
 def fill_playlist_json(list_of_all_playlists):
 
     json_schema = {
@@ -134,7 +155,7 @@ def fill_playlist_json(list_of_all_playlists):
 def main():
 
     #Countries
-    europe_countries = ["albania","andorra","austria","belarus","belgium","bosnia","bulgaria","croatia","cyprus","czech republic","denmark","estonia","france","finland","georgia","germany","greece","hungary","iceland","ireland","san marino","italy","kosovo","latvia","liechtenstein","lithuania","luxembourg","macedonia","malta", "moldova","monaco","montenegro","netherlands","norway","poland","portugal","romania","russia","serbia","slovakia","slovenia","spain","sweden","switzerland","turkey","ukraine","united kingdom"]
+    europe_countries = ["albania","andorra","austria","belarus","belgium","bosnia and herzegovina","bulgaria","croatia","cyprus","czech republic","denmark","estonia","france","finland","georgia","germany","greece","hungary","iceland","ireland","san marino","italy","kosovo","latvia","liechtenstein","lithuania","luxembourg","macedonia","malta", "moldova","monaco","montenegro","netherlands","norway","poland","portugal","romania","russian federation","serbia","slovakia","slovenia","spain","sweden","switzerland","turkey","ukraine","england", "isle of man", "northern ireland", "scotland", "wales"]
     
     list_of_all_playlists=[None]*PLAYLIST_METADATA
 
@@ -152,7 +173,7 @@ def main():
 
 
     list_of_all_playlists = np.delete(list_of_all_playlists, (0), axis=0)
-    print(list_of_all_playlists)
+    #print(list_of_all_playlists)
 
     #fill the list with all the players
     fill_playlist_json(list_of_all_playlists)

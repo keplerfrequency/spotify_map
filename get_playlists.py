@@ -15,11 +15,11 @@ OUTPUT_JSON = "test_output_playlists.json"
 #Playlist.json file is where all the playlists are stored. the temp is a temp file that then overwrites the other one
 PLAYLIST_JSON = "playlist.json"
 TEMP_PLAYLIST_JSON = "temp_playlist.json"
-NUMBER_OF_PLAYLISTS = 150
+NUMBER_OF_PLAYLISTS = 250
 PLAYLIST_METADATA = 6
 
 #Do a search of the playslists
-def get_playlists(query, type, limit, market, offset):
+def get_playlists(query, type, market, offset):
 
     spotify = spotipy.Spotify(requests_timeout=10, client_credentials_manager=SpotifyClientCredentials(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, ))
 
@@ -27,8 +27,8 @@ def get_playlists(query, type, limit, market, offset):
 
     if market in valid_markets:
         try:
-            response = spotify.search(query, 50, offset, type, market)
-            print(" has succeeded")
+            response = spotify.search(query, 50, offset*50, type, market)
+            print(" has succeeded. Search number {}".format(offset+1))
         except Exception as e:
             response = ""
             print(e)
@@ -37,8 +37,8 @@ def get_playlists(query, type, limit, market, offset):
     else:
         print(" . This country had no market support. Will try with no market.", end="")
         try:
-            response = spotify.search(query, limit, 0, type, offset)
-            print(" {} has succeeded".format(query))
+            response = spotify.search(query, 50, offset*50, type)
+            print(" {} has succeeded. Search number {}".format(query, offset+1))
         except Exception as e:
             response = ""
             print(e)
@@ -50,7 +50,6 @@ def get_playlists(query, type, limit, market, offset):
 def request_playlist(country, offset):
     
     type = "playlist"
-    limit = NUMBER_OF_PLAYLISTS
         
     #Get country code for country. Needed for market search 
     try:
@@ -62,16 +61,17 @@ def request_playlist(country, offset):
         market = ""
     
     #Perform search
-    playlists = get_playlists(country, type, limit, market, offset)
-    
+    playlists = get_playlists(country, type, market, offset)
+
     #Dump response in json file with all playlists found for country
+    
     with open(OUTPUT_JSON, "w") as outfile:
         json.dump(playlists, outfile)
 
     return
 
 #Process the response retrieved by Spotify
-def go_through_response(country):
+def process_response(country):
 
     #Substitute empty spaces with "-" so that map can access them properly
     country = country.replace(" ", "-")
@@ -80,7 +80,7 @@ def go_through_response(country):
     f = open(OUTPUT_JSON)
 
     #Initialize list of playlists for country X
-    list_of_playlists=[None]*PLAYLIST_METADATA
+    list_of_playlists=[]
 
     try:
         data = json.load(f)
@@ -94,12 +94,13 @@ def go_through_response(country):
             if 'name' in item:
                 name= item["name"]
 
-            #these are not obligatory, so should check if they are there
+            #Not obligatory, so should check if it is there
             if 'images' in item:
                 try:
                     img = item["images"][0]['url']
                 except:
                     img = "https://storage.googleapis.com/pr-newsroom-wp/1/2023/01/AppleCompetition-FTRHeader_V1-1-300x171.png"
+            
             if 'description' in item:
                 description =  item["description"]
                 if description == "":
@@ -107,26 +108,12 @@ def go_through_response(country):
 
 
             array = [country, urls, display_name, name, img, description]
+            list_of_playlists.append(array)
 
-            list_of_playlists = np.vstack((array, list_of_playlists))
-            
     except Exception as e:
         print(e) 
 
     f.close()
-
-
-    #Remove line of nones
-    list_of_playlists = np.delete(list_of_playlists, (-1), axis=0)
-    
-    #List by name so that similalry named lists appear together 
-    list_of_playlists = np.array(list_of_playlists,dtype=object)
-    try:
-        indices = np.argsort(list_of_playlists[:,3])
-        list_of_playlists = list_of_playlists[indices]
-    except Exception as e:
-        print(e)
-
     
     #Response from the country no longer needed, can therefore be deleted 
     if os.path.exists(OUTPUT_JSON):
@@ -141,6 +128,17 @@ def fill_playlist_json(list_of_all_playlists):
         "countries": []
         }
     
+
+    #List by name so that similalry named lists appear together
+    list_of_all_playlists = list(filter(lambda x: np.any(x), list_of_all_playlists))
+    list_of_all_playlists = np.array(list_of_all_playlists,dtype=object)
+    try:
+        indices = np.argsort(list_of_all_playlists[:,3])
+        list_of_all_playlists = list_of_all_playlists[indices]
+    except Exception as e:
+        print(e)
+
+    #Write to the final JSON file
     try:
         with open(TEMP_PLAYLIST_JSON, 'a') as json_file:
             for row in range(np.shape(list_of_all_playlists)[0]):
@@ -168,39 +166,33 @@ def main():
     europe_countries = ["albania","andorra","austria","belarus","belgium","bosnia and herzegovina","bulgaria","croatia","cyprus","czech republic","denmark","estonia","france","finland","georgia","germany","greece","hungary","iceland","ireland","san marino","italy","kosovo","latvia","liechtenstein","lithuania","luxembourg","macedonia","malta", "moldova","monaco","montenegro","netherlands","norway","poland","portugal","romania","russian federation","serbia","slovakia","slovenia","spain","sweden","switzerland","turkey","ukraine","england", "isle of man", "northern ireland", "scotland", "wales"]
     
     list_of_all_playlists = [None]*PLAYLIST_METADATA
+    number_of_searches = math.ceil(NUMBER_OF_PLAYLISTS / 50)
 
-    number_of_searches = math.ceil(NUMBER_OF_PLAYLISTS / 50) - 1
-
-    for country in europe_countries:
-        
+    for country in europe_countries:    
         for offset in range(number_of_searches):
             
-            #Get the playlists from country X
+            #Get the playlists from country X with offset
             request_playlist(country, offset)
 
-            playlists = go_through_response(country)
+            batch_of_playlists = process_response(country)
             
-            list_of_all_playlists = np.vstack((list_of_all_playlists, playlists))
+            try:
+                list_of_all_playlists = np.vstack((list_of_all_playlists, batch_of_playlists))
+            except Exception as e:
+                print(e)
 
 
 
 
-    list_of_all_playlists = np.delete(list_of_all_playlists, (0), axis=0)
-    #print(list_of_all_playlists)
-
-    #fill the list with all the players
+    #fill the list with all the playlists
     fill_playlist_json(list_of_all_playlists)
 
-    if os.path.exists(PLAYLIST_JSON):
-        os.remove(PLAYLIST_JSON)
+
 
     if os.path.exists(TEMP_PLAYLIST_JSON):
         shutil.copyfile(TEMP_PLAYLIST_JSON, PLAYLIST_JSON)    
         os.remove(TEMP_PLAYLIST_JSON)
     
-    
-   
-
 
 if __name__ == '__main__':
     main()

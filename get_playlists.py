@@ -5,6 +5,7 @@ import json
 import numpy as np
 import os
 import shutil
+import math
 
 #Get this here: https://developer.spotify.com/dashboard/applications
 CLIENT_ID = '948c4e2f99254fcdbf7e8f9779da03b6'
@@ -14,11 +15,11 @@ OUTPUT_JSON = "test_output_playlists.json"
 #Playlist.json file is where all the playlists are stored. the temp is a temp file that then overwrites the other one
 PLAYLIST_JSON = "playlist.json"
 TEMP_PLAYLIST_JSON = "temp_playlist.json"
-NUMBER_OF_PLAYLISTS = 40
+NUMBER_OF_PLAYLISTS = 150
 PLAYLIST_METADATA = 6
 
 #Do a search of the playslists
-def get_playlists(query, type, limit, market):
+def get_playlists(query, type, limit, market, offset):
 
     spotify = spotipy.Spotify(requests_timeout=10, client_credentials_manager=SpotifyClientCredentials(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, ))
 
@@ -26,7 +27,7 @@ def get_playlists(query, type, limit, market):
 
     if market in valid_markets:
         try:
-            response = spotify.search(query, limit, 0, type, market)
+            response = spotify.search(query, 50, offset, type, market)
             print(" has succeeded")
         except Exception as e:
             response = ""
@@ -34,9 +35,9 @@ def get_playlists(query, type, limit, market):
             pass
     
     else:
-        print("has no market support. Will try with no market.", end="")
+        print(" . This country had no market support. Will try with no market.", end="")
         try:
-            response = spotify.search(query, limit, 0, type)
+            response = spotify.search(query, limit, 0, type, offset)
             print(" {} has succeeded".format(query))
         except Exception as e:
             response = ""
@@ -46,7 +47,7 @@ def get_playlists(query, type, limit, market):
     return response
 
 #Get the playlists from a country
-def request_playlist(country):
+def request_playlist(country, offset):
     
     type = "playlist"
     limit = NUMBER_OF_PLAYLISTS
@@ -57,11 +58,11 @@ def request_playlist(country):
         market = str(codes)[18] + str(codes)[19]
         print("{} {}".format(market, country), end="")
     except:
-        print("   {} has no country code".format(country), end="")
+        print("   {} has no country code.".format(country), end="")
         market = ""
     
     #Perform search
-    playlists = get_playlists(country, type, limit, market)
+    playlists = get_playlists(country, type, limit, market, offset)
     
     #Dump response in json file with all playlists found for country
     with open(OUTPUT_JSON, "w") as outfile:
@@ -109,16 +110,25 @@ def go_through_response(country):
 
             list_of_playlists = np.vstack((array, list_of_playlists))
             
-        #List by name so that similalry named lists appear together (BROKEN)
-        #list_of_playlists=np.sort(list_of_playlists, axis=1)
-    
     except Exception as e:
-        print(e)
-        
+        print(e) 
 
     f.close()
+
+
+    #Remove line of nones
+    list_of_playlists = np.delete(list_of_playlists, (-1), axis=0)
     
-    #repsonse from the country no longer needed, can tehrefore be deleted 
+    #List by name so that similalry named lists appear together 
+    list_of_playlists = np.array(list_of_playlists,dtype=object)
+    try:
+        indices = np.argsort(list_of_playlists[:,3])
+        list_of_playlists = list_of_playlists[indices]
+    except Exception as e:
+        print(e)
+
+    
+    #Response from the country no longer needed, can therefore be deleted 
     if os.path.exists(OUTPUT_JSON):
         os.remove(OUTPUT_JSON)
 
@@ -157,19 +167,22 @@ def main():
     #Countries
     europe_countries = ["albania","andorra","austria","belarus","belgium","bosnia and herzegovina","bulgaria","croatia","cyprus","czech republic","denmark","estonia","france","finland","georgia","germany","greece","hungary","iceland","ireland","san marino","italy","kosovo","latvia","liechtenstein","lithuania","luxembourg","macedonia","malta", "moldova","monaco","montenegro","netherlands","norway","poland","portugal","romania","russian federation","serbia","slovakia","slovenia","spain","sweden","switzerland","turkey","ukraine","england", "isle of man", "northern ireland", "scotland", "wales"]
     
-    list_of_all_playlists=[None]*PLAYLIST_METADATA
+    list_of_all_playlists = [None]*PLAYLIST_METADATA
+
+    number_of_searches = math.ceil(NUMBER_OF_PLAYLISTS / 50) - 1
 
     for country in europe_countries:
         
-        #Get the playlists from country X
-        request_playlist(country)
+        for offset in range(number_of_searches):
+            
+            #Get the playlists from country X
+            request_playlist(country, offset)
 
-        playlists = go_through_response(country)
-        
-        list_of_all_playlists = np.vstack((list_of_all_playlists, playlists))
+            playlists = go_through_response(country)
+            
+            list_of_all_playlists = np.vstack((list_of_all_playlists, playlists))
 
-        #Remove line of nones
-        list_of_all_playlists = np.delete(list_of_all_playlists, (-1), axis=0)
+
 
 
     list_of_all_playlists = np.delete(list_of_all_playlists, (0), axis=0)

@@ -132,6 +132,40 @@
     </div>
 
     <div id="spotifyplayerbeta" class="flex-child bottom">
+        <script src="https://sdk.scdn.co/spotify-player.js"></script>
+                <script>
+                window.onSpotifyWebPlaybackSDKReady = () => {
+                    const token = 'BQCAp9r62Wr-vWwyreZgsEtI9BaqQQAyarAyBGBNjKAZRUw0z7uVLrsgQt11NqaWef0YqGEnZo2pYnqt66nRbzQU6FUakb0yXBhtomeBiGmNFdvZiXmYllY86YxwYY0e6cfUPg12xnPrXeavZVXiPWEDb_VOxFW_nlLTvRgywSQxblyRA5oEpvMHlGAE83Xd';
+                    const player = new Spotify.Player({
+                    name: 'Spotify map',
+                    getOAuthToken: cb => { cb(token); },
+                    volume: 0.5
+                    });
+                
+                // Ready
+                player.addListener('ready', ({ device_id }) => {
+                    console.log('Ready with Device ID', device_id);
+                });
+                // Not Ready
+                player.addListener('not_ready', ({ device_id }) => {
+                    console.log('Device ID has gone offline', device_id);
+                });
+                player.addListener('initialization_error', ({ message }) => {
+                    console.error(message);
+                });
+                player.addListener('authentication_error', ({ message }) => {
+                    console.error(message);
+                });
+                player.addListener('account_error', ({ message }) => {
+                    console.error(message);
+                });
+                document.getElementById('togglePlay').onclick = function() {
+                player.togglePlay();
+                };
+                player.connect();
+                }
+                </script>
+
         <div style="position: relative;"> 
             <iframe id="embedded_player" style="position: absolute; display:block" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX6HJZtcjGrCn?utm_source=generator&theme=0" width="200%" height="500" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 

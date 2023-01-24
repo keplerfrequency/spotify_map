@@ -82,5 +82,5 @@ input:checked + .slider:before {
 
 /* Hide the unselected playslists*/
 .hidden {
-  display: none;
+  display: none !important;
 }

@@ -75,8 +75,5 @@ window.onclick = e => {
     let link = clicked_item.getAttribute('data-href')
     link = link.replace('playlist', 'embed/playlist')+"?utm_source=generator&theme=0";
     iframe.src = link;
-
   }
 } 
-
-

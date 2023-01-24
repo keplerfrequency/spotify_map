@@ -5,7 +5,6 @@
   }
   
   .playlist_card {
-    background: url(image_url) no-repeat center center;
     background-size: cover;
     object-fit: clip;
     object-position: center;

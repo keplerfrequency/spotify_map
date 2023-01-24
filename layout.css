@@ -24,15 +24,12 @@
   /* scrollbar management */
   overflow-y:scroll;
   scrollbar-width: none;
-  -ms-overflow-style: none;  /* IE and Edge */
+  /* IE and Edge */
+  -ms-overflow-style: none;  
 }
 
 .spotify::-webkit-scrollbar {
   display: none; /* Hide scrollbar for Chrome, Safari and Opera */
-}
-
-.spotifyplayerbeta{
-  width: 10%;
 }
 
 /*FLEX Container */

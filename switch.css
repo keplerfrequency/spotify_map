@@ -7,7 +7,6 @@
   width: 52px;
 }
 
-
 .switch {
   position: relative;
   display: inline-block;
@@ -30,7 +29,6 @@
   color: white;
   padding-top:10px;
 }
-
 
 /* Slider details*/
 .slider {

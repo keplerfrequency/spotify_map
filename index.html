@@ -1,24 +1,17 @@
 <!doctype html>
 
 <head>
-    <!-- CSSMap STYLESHEET - EUROPE -->
+    <!-- CSS styly sheets-->
     <link rel="stylesheet" type="text/css" href="cssmap-europe/cssmap-europe.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="includes/style.css" media="all" />
     <link rel="stylesheet" type="text/css" href="layout.css" media="all" />
     <link rel="stylesheet" type="text/css" href="switch.css" media="all" />
     <link rel="stylesheet" type="text/css" href="playlists.css" media="all" />
 
-    <script src="app.js"></script>
+    <!-- Scripts -->
+    <script type="text/javascript" src="app.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cssmapsplugin.com/5/jquery.cssmap.min.js"></script>
-    
-    <script>
-      window.onload = function() {
-        displayPlaylists("playlists");
-      }
-      
-    </script>
-   
+    <script type="text/javascript" src="https://cssmapsplugin.com/5/jquery.cssmap.min.js"></script>      
     <script type="text/javascript">
         $(document).ready(function(){
         
@@ -44,9 +37,9 @@
 
     <div id="interactivemap" id class="flex-child left">
         
-        <div class="logo" ><img src="logo.png"></div>
-        
-        <div id="map-europe" id>
+        <div id="logo" class="logo" ><img src="logo.png"></div>
+               
+        <div id="map-europe">
             <ul class="europe">
             <li class="eu1"><a href="#albania">Albania</a></li>
             <li class="eu2"><a href="#andorra">Andorra</a></li>
@@ -103,7 +96,7 @@
             </ul>
         </div>
 
-        <div class="switch-container">
+        <div id="toggles" class="switch-container">
             <div class="toggle-container">
                 <span class="switch_label">Spotify made</span>
                 <label class="switch" id="toggle-button-spotify">
@@ -120,10 +113,9 @@
             </div>
         </div> 
           
-        
     </div>
 
-    <div class="flex-child right">
+    <div id="playlist_repository" class="flex-child right">
         <div id="spotify" >
             <div id="demo-agents">                    
                 <ul id="playlists" class="playlists"></ul>
@@ -172,9 +164,6 @@
         </div>
         <div style="background-color: #00d755 ; height: 5px; width: 200%; position: absolute;"></div>
     </div>
-    
-    
-
 
 
 </body>

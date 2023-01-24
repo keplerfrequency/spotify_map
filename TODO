@@ -15,20 +15,19 @@ Todo:
     ☐ 960
     ☐ 1280
     ☐ 1450
-  ☐ remover barra do lado
-  ☐ fazer crop a imagens
+  ✔ remover barra do lado @done(23-01-24 14:07)
+  ✔ fazer crop a imagens @done(23-01-24 14:07)
 
     
   Funcao:
   ✔ fazer com que painel do pais mude dinamaicamente (e nao permanente) @done(23-01-12 19:08)
-  ☐ descobrir como ter um embedded player
+  ✔ descobrir como ter um embedded player @done(23-01-24 14:08)
   ✔ crirar formato json @done(23-01-14 18:58)
-  ☐ ver se da para por um toggle para filtrar por
-    ☐ criador (spotify vs non-spotify)
-    ☐ estilo de musica (?)
+  ✔ ver se da para por um toggle para filtrar por @done(23-01-24 14:07)
+    ✔ criador (spotify vs non-spotify) @done(23-01-24 14:07)
   ✔ por playlists dinamicamente do json file @done(23-01-14 18:58)
-☐ adicionar descricao da playlist
-ver de paises que nao funcionaram (GB, bosnia, CZ)
+✔ adicionar descricao da playlist @done(23-01-24 14:07)
+✔ ver de paises que nao funcionaram (GB, bosnia, CZ) @done(23-01-24 14:07)
 
 
   

@@ -6,13 +6,36 @@
     <link rel="stylesheet" type="text/css" href="includes/style.css" media="all" />
     <link rel="stylesheet" type="text/css" href="layout.css" media="all" />
     <link rel="stylesheet" type="text/css" href="switch.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="playlists.css" media="all" />
 
     <script src="app.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cssmapsplugin.com/5/jquery.cssmap.min.js"></script>
+    
     <script>
       window.onload = function() {
         displayPlaylists("playlists");
       }
       
+    </script>
+   
+    <script type="text/javascript">
+        $(document).ready(function(){
+        
+        $("#map-europe").CSSMap({
+            "mapStyle": "vintage",
+            "tooltips": false,
+            "size": 960,
+            "agentsList": {
+                "enable": true,
+                "agentsListId": "#demo-agents",
+                "agentsListSpeed": 100,
+                "agentsListOnHover": false
+            }
+        });
+
+        
+        });
     </script>
 
 </head>
@@ -20,7 +43,9 @@
 <body id="main-body" class="flex-container">
 
     <div id="interactivemap" id class="flex-child left">
+        
         <div class="logo" ><img src="logo.png"></div>
+        
         <div id="map-europe" id>
             <ul class="europe">
             <li class="eu1"><a href="#albania">Albania</a></li>
@@ -93,102 +118,29 @@
                     <span class="slider round"></span>
                 </label>
             </div>
-        </div>
-        
+        </div> 
           
         
     </div>
 
     <div class="flex-child right">
-
-        <div id="spotify" id >
-                <div id="demo-agents">
-                    
-                    <script src="app.js"></script>
-                    <script>
-                    //call the function 
-                    resizeImages();
-                    </script>
-                    <ul id="playlists" class="playlists"></ul>
-                </div>
+        <div id="spotify" >
+            <div id="demo-agents">                    
+                <ul id="playlists" class="playlists"></ul>
             </div>
-            
+        </div>    
+    </div>
 
-            <div id="spotifyplayerbeta">
-                <script src="https://sdk.scdn.co/spotify-player.js"></script>
-                <script>
-                window.onSpotifyWebPlaybackSDKReady = () => {
-                    const token = 'BQCAp9r62Wr-vWwyreZgsEtI9BaqQQAyarAyBGBNjKAZRUw0z7uVLrsgQt11NqaWef0YqGEnZo2pYnqt66nRbzQU6FUakb0yXBhtomeBiGmNFdvZiXmYllY86YxwYY0e6cfUPg12xnPrXeavZVXiPWEDb_VOxFW_nlLTvRgywSQxblyRA5oEpvMHlGAE83Xd';
-                    const player = new Spotify.Player({
-                    name: 'Spotify map',
-                    getOAuthToken: cb => { cb(token); },
-                    volume: 0.5
-                    });
-                
-                // Ready
-                player.addListener('ready', ({ device_id }) => {
-                    console.log('Ready with Device ID', device_id);
-                });
-
-                // Not Ready
-                player.addListener('not_ready', ({ device_id }) => {
-                    console.log('Device ID has gone offline', device_id);
-                });
-
-                player.addListener('initialization_error', ({ message }) => {
-                    console.error(message);
-                });
-
-                player.addListener('authentication_error', ({ message }) => {
-                    console.error(message);
-                });
-
-                player.addListener('account_error', ({ message }) => {
-                    console.error(message);
-                });
-
-                document.getElementById('togglePlay').onclick = function() {
-                player.togglePlay();
-                };
-
-                player.connect();
-                }
-                </script>
-                
-            </div>
-
-
-            <!--<div id="artistinfo">
-                
-            </div> -->
+    <div id="spotifyplayerbeta" class="flex-child bottom">
+        <div style="position: relative;"> 
+            <iframe id="embedded_player" style="position: absolute; display:block" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX6HJZtcjGrCn?utm_source=generator&theme=0" width="200%" height="500" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
         </div>
-
-
-
-    <!-- jQuery -->
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!-- CSSMap SCRIPT -->
-    <script type="text/javascript" src="https://cssmapsplugin.com/5/jquery.cssmap.min.js"></script>
+        <div style="background-color: #00d755 ; height: 5px; width: 200%; position: absolute;"></div>
+    </div>
     
     
-    <script type="text/javascript">
-        $(document).ready(function(){
-        
-        $("#map-europe").CSSMap({
-            "mapStyle": "vintage",
-            "tooltips": false,
-            "size": 960,
-            "agentsList": {
-                "enable": true,
-                "agentsListId": "#demo-agents",
-                "agentsListSpeed": 100,
-                "agentsListOnHover": false
-            }
-        });
 
-        
-        });
-    </script>
+
 
 </body>

@@ -80,8 +80,6 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-
-
 /* Hide the unselected playslists*/
 .hidden {
   display: none;

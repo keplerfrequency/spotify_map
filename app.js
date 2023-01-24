@@ -10,12 +10,13 @@
           box.setAttribute("id",country.country);
   
           const a = document.createElement('a');
-          a.href = playlist.link;
           a.target = "_blank";
           a.rel = "noopener noreferrer";
   
           const img = document.createElement('img');
+          img.setAttribute("class", "playlist-img");
           img.src = playlist.img;
+          img.setAttribute("data-href", playlist.link);
           a.appendChild(img);
           box.appendChild(a);
   
@@ -65,22 +66,17 @@ document.addEventListener('DOMContentLoaded', function(){
   });
 });
 
-//This function will do the hover with the description of the playlist
-/*document.addEventListener("DOMContentLoaded", function() {
-  var playlist_card = document.getElementsByClassName("playlist_card");
-  for (var i = 0; i < playlist_card.length; i++) {
-      playlist_card[i].addEventListener("mouseover", function() {
-          var description = this.getAttribute("data-description");
-          var description_div = document.createElement("div");
-          description_div.innerHTML = description;
-          description_div.classList.add("description");
-          this.appendChild(description_div);
-      });
+//This code places the href from the playlist into the embedded player upon image click
+window.onclick = e => {
+  if(e.target.classList.contains('playlist-img')){
+    const iframe = document.querySelector('#embedded_player'); 
+    const clicked_item = e.target;
 
-      playlist_card[i].addEventListener("mouseout", function() {
-          var desc = this.getElementsByClassName("description");
-          for (var j = 0; j < desc.length; j++) {
-              desc[j].remove();
-            }
-        }
-  });*/
+    let link = clicked_item.getAttribute('data-href')
+    link = link.replace('playlist', 'embed/playlist')+"?utm_source=generator&theme=0";
+    iframe.src = link;
+
+  }
+} 
+
+

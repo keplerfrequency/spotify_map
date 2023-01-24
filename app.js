@@ -19,7 +19,8 @@ function displayPlaylists(id){
 
         const img = document.createElement('img');
         img.setAttribute("class", "playlist-img");
-        img.src = playlist.img;
+        img.setAttribute("loading", "lazy");
+        img.setAttribute("src", playlist.img);
         img.setAttribute("data-href", playlist.link);
         a.appendChild(img);
         box.appendChild(a);

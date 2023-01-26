@@ -1,0 +1,36 @@
+#body{
+    background-color: #272727;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#body h1{
+    color: white;
+    size: 40px;
+    text-align: center;
+}
+
+#body h2{
+    color: #00d755;
+}
+
+#body h3:hover{
+    background-color: #00d755;
+    color: #272727;
+}
+
+#return{
+    text-decoration: none;
+    padding: 10px 10px;
+    border-radius: 10px;
+    background-color: #00d755;
+    color: #fff;
+    font-size: 20px;
+    transition: all 0.3s ease;
+    height: 30px;
+    display: flex; /* use flex layout */
+    align-items: center; /* center the button vertically */
+    justify-content: center; /* center the button horizontally */
+    width: 98vw;
+    position: absolute;
+  }

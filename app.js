@@ -10,6 +10,7 @@ function displayPlaylists(id){
     data.countries.forEach(country => {
       country.playlists.forEach(playlist => {
         const box = document.createElement('li');
+        box.setAttribute("loading", "lazy");
         box.setAttribute("class", "playlist_card")
         box.setAttribute("id",country.country);
 

@@ -63,7 +63,7 @@
   display: flex; /* use flex layout */
   align-items: center; /* center the button vertically */
   justify-content: center; /* center the button horizontally */
-  width: 98vw;
+  width: 99vw;
   position: absolute;
 }
 

@@ -22,11 +22,18 @@
   height: 100%;
   position: absolute;
   
+  overflow: hidden;
   /* scrollbar management */
-  overflow-y:scroll;
+  overflow-y: scroll;
   scrollbar-width: none;
   /* IE and Edge */
-  -ms-overflow-style: none;  
+  -ms-overflow-style: none;
+}
+
+/*scrollbar for chrome*/
+#spotify::-webkit-scrollbar{
+  width: 0.2em;
+  background-color: transparent;
 }
 
 .spotify::-webkit-scrollbar {

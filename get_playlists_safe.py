@@ -18,8 +18,12 @@ OUTPUT_JSON = "test_output_playlists.json"
 #Playlist.json file is where all the playlists are stored. the temp is a temp file that then overwrites the other one
 PLAYLIST_JSON = "playlist.json"
 TEMP_PLAYLIST_JSON = "temp_playlist.json"
-NUMBER_OF_PLAYLISTS = 100
+NUMBER_OF_PLAYLISTS = 250
 PLAYLIST_METADATA = 6
+EUROPE_COUNTRIES_OG = ["albania","andorra","austria","belarus","belgium","bosnia and herzegovina","bulgaria","croatia","cyprus","czech republic","denmark","estonia","france","finland","georgia","germany","greece","hungary","iceland","ireland","san marino","italy","kosovo","latvia","liechtenstein","lithuania","luxembourg","macedonia","malta", "moldova","monaco","montenegro","netherlands","norway","poland","portugal","romania","russian federation","serbia","slovakia","slovenia","spain","sweden","switzerland","turkey","ukraine","england", "isle of man", "northern ireland", "scotland", "wales"]
+
+EUROPE_COUNTRIES = ["albania","andorra","austria","belarus","belgium","bosnia and herzegovina","bulgaria","croatia","cyprus","czech republic","denmark","estonia","france","finland","georgia","germany","greece","hungary","iceland","ireland","italy","kosovo","latvia","lithuania","luxembourg","macedonia","malta", "moldova","montenegro","netherlands","norway","poland","portugal","romania","russian federation","serbia","slovakia","slovenia","spain","sweden","switzerland","turkey","ukraine","england", "isle of man", "northern ireland", "scotland", "wales"]
+
 
 #Do a search of the playslists
 def get_playlists(query, type, market, offset):
@@ -27,6 +31,8 @@ def get_playlists(query, type, market, offset):
     spotify = spotipy.Spotify(requests_timeout=10, client_credentials_manager=SpotifyClientCredentials(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, ))
 
     valid_markets = ["AD","AE","AG","AL","AM","AO","AR","AT","AU","AZ","BA","BB","BD","BE","BF","BG","BH","BI","BJ","BN","BO","BR","BS","BT","BW","BY","BZ","CA","CD","CG","CH","CI","CL","CM","CO","CR","CV","CW","CY","CZ","DE","DJ","DK","DM","DO","DZ","EC","EE","EG","ES","ET","FI","FJ","FM","FR","GA","GB","GD","GE","GH","GM","GN","GQ","GR","GT","GW","GY","HK","HN","HR","HT","HU","ID","IE","IL","IN","IQ","IS","IT","JM","JO","JP","KE","KG","KH","KI","KM","KN","KR","KW","KZ","LA","LB","LC","LI","LK","LR","LS","LT","LU","LV","LY","MA","MC","MD","ME","MG","MH","MK","ML","MN","MO","MR","MT","MU","MV","MW","MX","MY","MZ","NA","NE","NG","NI","NL","NO","NP","NR","NZ","OM","PA","PE","PG","PH","PK","PL","PS","PT","PW","PY","QA","RO","RS","RW","SA","SB","SC","SE","SG","SI","SK","SL","SM","SN","SR","ST","SV","SZ","TD","TG","TH","TJ","TL","TN","TO","TR","TT","TV","TW","TZ","UA","UG","US","UY","UZ","VC","VE","VN","VU","WS","XK","ZA","ZM","ZW"]
+
+    query = get_country_search_term(query)
 
     if market in valid_markets:
         try:
@@ -145,16 +151,18 @@ def fill_playlist_json(list_of_all_playlists):
     try:
         with open(TEMP_PLAYLIST_JSON, 'a') as json_file:
             for row in range(np.shape(list_of_all_playlists)[0]):
-                country = {
-                    "country": list_of_all_playlists[row, 0],
-                    "playlists": [{
-                        "link": list_of_all_playlists[row, 1],
-                        "playlist_by": list_of_all_playlists[row, 2],
-                        "name": list_of_all_playlists[row, 3],
-                        "img": list_of_all_playlists[row, 4],
-                        "description": list_of_all_playlists[row, 5]
-                    }]
-                }
+                #Remove all "This is" playlists 
+                if "This Is" not in list_of_all_playlists[row, 3]:
+                    country = {
+                        "country": list_of_all_playlists[row, 0],
+                        "playlists": [{
+                            "link": list_of_all_playlists[row, 1],
+                            "playlist_by": list_of_all_playlists[row, 2],
+                            "name": list_of_all_playlists[row, 3],
+                            "img": list_of_all_playlists[row, 4],
+                            "description": list_of_all_playlists[row, 5]
+                        }]
+                    }
                 json_schema['countries'].append(country)
             json.dump(json_schema, json_file, indent=4, separators=(',', ': '))
     
@@ -163,13 +171,19 @@ def fill_playlist_json(list_of_all_playlists):
 
     return
 
+def get_country_search_term(country):
+
+    europe_countries_search_term = ["albania","andorra","osterreich austria","belarus","belgium","bosnia and herzegovina","bulgaria","croatia hrvatska","cyprus","czech republic","denmark dansk","estonia","france","finland","georgia","germany","greece Ελληνική","hungary magyar","iceland island","ireland","italia","kosovo","latvia","lithuania","luxembourg","macedonia","malta", "moldova","montenegro","netherlands","norway norske","poland polskie","portugal","romania","russia","serbia","slovakia","slovenia","espana","sweden svensk","switzerland","turkey","ukraine","england", "isle of man", "northern ireland", "scotland", "wales"]
+ 
+    name = europe_countries_search_term[EUROPE_COUNTRIES.index(country)]
+
+    return name
+
 def main():
 
     #Countries
-    europe_countries = ["albania","andorra","austria","belarus","belgium","bosnia and herzegovina","bulgaria","croatia","cyprus","czech republic","denmark","estonia","france","finland","georgia","germany","greece","hungary","iceland","ireland","san marino","italy","kosovo","latvia","liechtenstein","lithuania","luxembourg","macedonia","malta", "moldova","monaco","montenegro","netherlands","norway","poland","portugal","romania","russian federation","serbia","slovakia","slovenia","spain","sweden","switzerland","turkey","ukraine","england", "isle of man", "northern ireland", "scotland", "wales"]
+    europe_countries = EUROPE_COUNTRIES
     
-    europe_countries = ["portugal"]
-
     list_of_all_playlists = [None]*PLAYLIST_METADATA
     number_of_searches = math.ceil(NUMBER_OF_PLAYLISTS / 50)
 

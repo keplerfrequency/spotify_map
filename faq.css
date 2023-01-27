@@ -11,7 +11,7 @@
 }
 
 /*scrollbar for chrome*/
-#sbody::-webkit-scrollbar{
+#body::-webkit-scrollbar{
     width: 0.2em;
     background-color: transparent;
   }

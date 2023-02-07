@@ -3,16 +3,27 @@ window.onload = function() {
   displayPlaylists("playlists");
 }  
 // This function creates the plalist cards for every playlist
-function displayPlaylists(id){
+async function displayPlaylists(id){
   fetch('playlist.json')
   .then(response => response.json())
   .then(data => {
+    const countryPlaylist = {}
     data.countries.forEach(country => {
       country.playlists.forEach(playlist => {
-        const box = document.createElement('li');
-        box.setAttribute("loading", "lazy");
-        box.setAttribute("class", "playlist_card")
-        box.setAttribute("id",country.country);
+        countryPlaylist[country.country] = countryPlaylist[country.country] || []
+        countryPlaylist[country.country].push(playlist)
+      })
+    })
+
+    Object.entries(countryPlaylist).forEach(([country, playlists]) => {
+      const container = document.createElement('li');
+      
+      container.setAttribute("id", country);
+
+      playlists.forEach(playlist => {
+        const box = document.createElement('div');
+        box.setAttribute("loading", "lazy")
+        box.classList.add('playlist_card')
 
         const a = document.createElement('a');
         a.target = "_blank";
@@ -40,46 +51,39 @@ function displayPlaylists(id){
         div.setAttribute("class", "playlist_description")
         box.appendChild(div)
 
-        document.getElementById(id).appendChild(box);
+        container.appendChild(box)
       });
+      document.getElementById(id).appendChild(container);
     });
   });
 }
 
 //This function will toggle the spotify playlists
 document.addEventListener('DOMContentLoaded', function(){
-  const toggleButton = document.getElementById("toggle-button-spotify").querySelector('input');
   const playlistByValue = "Spotify";
 
-  toggleButton.addEventListener("change", function() {
-    const elements = document.querySelectorAll(`[data-playlist-by='${playlistByValue}']`);
-    elements.forEach(function(element) {
-      element.classList.toggle("hidden", !this.checked);
-    }.bind(this));
-  });
-});
+  document.querySelector("#toggle-button-spotify input").addEventListener("change", (ev) => {
+    for (element of document.querySelectorAll(`[data-playlist-by='${playlistByValue}']`)) {
+      element.classList.toggle("hidden", !ev.target.checked)
+    }
+  })
 
-//This function toggles the non user playlists
-document.addEventListener('DOMContentLoaded', function(){
-  const toggleButton = document.getElementById("toggle-button-user").querySelector('input');
-  const playlistByValue = "Spotify";
-  
-  toggleButton.addEventListener("change", function() {
-    const elements = document.querySelectorAll(`[data-playlist-by]:not([data-playlist-by='${playlistByValue}'])`);
-    elements.forEach(function(element) {
-      element.classList.toggle("hidden", !this.checked);
-    }.bind(this));
-  });
-});
+  //This function toggles the non user playlists
+  document.querySelector("#toggle-button-user input").addEventListener("change", (ev) => {
+    for (element of document.querySelectorAll(`[data-playlist-by]:not([data-playlist-by='${playlistByValue}'])`)) {
+      element.classList.toggle("hidden", !ev.target.checked)
+    }
+  })
+})
 
 //This code places the href from the playlist into the embedded player upon image click
-window.onclick = e => {
-  if(e.target.classList.contains('playlist-img')){
+window.addEventListener('click', (ev) => {
+  if(ev.target.classList.contains('playlist-img')){
     const iframe = document.querySelector('#embedded_player'); 
-    const clicked_item = e.target;
+    const clicked_item = ev.target;
 
     let link = clicked_item.getAttribute('data-href')
     link = link.replace('playlist', 'embed/playlist')+"?utm_source=generator&theme=0";
     iframe.src = link;
   }
-} 
+})

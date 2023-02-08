@@ -51,6 +51,22 @@
     flex: 1;
 } 
 
+#login{
+  z-index: 9;
+  background-color: #00d755;
+  padding: 10px 10px;
+  border-radius: 10px;
+  position: absolute;
+  top: 500px;
+  margin-bottom: 10px;
+  align-items: center;
+  color: #fff;
+}
+
+#login :hover{
+  opacity: 0.8;
+}
+
 #seperator a {
   text-decoration: none;
   padding: 10px 10px;

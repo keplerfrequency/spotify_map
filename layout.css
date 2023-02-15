@@ -54,32 +54,34 @@
 #login{
   z-index: 9;
   background-color: #00d755;
+  border-color: transparent;
   padding: 10px 10px;
   border-radius: 10px;
   position: absolute;
   top: 500px;
   margin-bottom: 10px;
   align-items: center;
-  color: #fff;
+  color: #272727;
+  font-size: 17px;
 }
 
-#login :hover{
+#login:hover{
   opacity: 0.8;
 }
 
-#seperator a {
+#seperator a{
   text-decoration: none;
   padding: 10px 10px;
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: #00d755;
-  color: #fff;
+  color: #272727;
   font-size: 20px;
   transition: all 0.3s ease;
   height: 30px;
   display: flex; /* use flex layout */
   align-items: center; /* center the button vertically */
   justify-content: center; /* center the button horizontally */
-  width: 99vw;
+  width: 97vw;
   position: absolute;
 }
 
@@ -93,7 +95,8 @@
 #search{
   background-color:#272727;
   color: white;
-  width: 95%;
+  width: 97%;
+  border-color: #00d755;
 }
 
 /*FAQ*/
@@ -112,9 +115,6 @@
   color: white;
 }
 
-
-
-
 .popup {
   position: fixed;
   top: 0;
@@ -127,17 +127,32 @@
 }
 
 .popup-content {
+  background-color:#00d755; 
+  color:#272727; 
+  border-color: #272727; 
+  border-width: 3px;
   border-radius: 20px;
-  color: #272727;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
   padding: 20px;
   text-align: center;
 }
 
 .popup-content button {
+  background-color: #ffd700;
+  border-radius: 5px;
+  color: #0057b7;
+  border-color: transparent;
   margin-top: 10px;
+}
+
+.popup-content button:hover {
+  background-color: #0057b7;
+  color: #ffd700;
+}
+
+#buffer_area{
+  height: 200px;
 }

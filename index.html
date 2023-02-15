@@ -41,17 +41,16 @@
 <body id="main-body" class="flex-container">
 
     <div id="popup" class="popup">
-        <div class="popup-content"   style="background-color:#00d755; color:#272727;">
-          <h3 style="color:#272727">Welcome to Spotify maps</h3>
-          <p>On this site you can browse playlsits by each country, toggle whether it is Spotify or user made and search through the pre-chosen playlists.</p>
+        <div class="popup-content">
+          <h3 style="color:#272727">Welcome to Spotify maps!</h3>
+          <p>On this site you can browse the selected playlists by each country, toggle whether it is Spotify or user made and search through the pre-chosen playlists.</p>
+          <p>---</p>
+          <p>Warning: this site is only tested on desktop</p>
           <button onclick="closePopup()">Close</button>
         </div>
-    </div>
-      
+    </div>      
 
-    <div id="login" class="login_div">
-        <p class="login_text">Login to Spotify!</p>
-    </div>
+    <button id="login" onclick="authorizeUser()">Login to Spotify!</button>
 
     <div id="interactivemap" id class="flex-child left">
         

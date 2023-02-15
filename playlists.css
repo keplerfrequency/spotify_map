@@ -2,11 +2,8 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     place-items: center;
-    justify-content: left;
   }
-
-
-  
+ 
 .playlist_card {
   background-size: cover;
   object-fit: clip;

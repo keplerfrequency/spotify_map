@@ -62,6 +62,9 @@ async function displayPlaylists(id){
       });
       document.getElementById(id).appendChild(container);
     });
+    const extraDiv = document.createElement('div');
+    extraDiv.setAttribute('id', 'buffer_area');
+    document.getElementById(id).appendChild(extraDiv);
   });
 }
 

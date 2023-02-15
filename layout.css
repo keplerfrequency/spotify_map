@@ -92,8 +92,8 @@
 
 #search{
   background-color:#272727;
-  outline: #00d755;
   color: white;
+  width: 95%;
 }
 
 /*FAQ*/
@@ -110,4 +110,34 @@
 
 #FAQ_text{
   color: white;
+}
+
+
+
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 9999;
+}
+
+.popup-content {
+  border-radius: 20px;
+  color: #272727;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.popup-content button {
+  margin-top: 10px;
 }

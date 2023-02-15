@@ -1,8 +1,12 @@
 //Load the playlists when the window loads 
 window.onload = function() {
   document.getElementById("search").value = "";
+  
+  if (!localStorage.getItem("popupShown")) {
+    showPopup();
+  }   
+  
   displayPlaylists("playlists");
-  searchPlaylist;
 } 
 
 // This function creates the plalist cards for every playlist
@@ -113,3 +117,18 @@ function searchPlaylist() {
     }
   }
 }
+
+
+
+function showPopup() {
+  var popup = document.getElementById("popup");
+  popup.style.display = "block";
+}
+
+function closePopup() {
+  var popup = document.getElementById("popup");
+  popup.style.display = "none";
+  localStorage.setItem("popupShown", "true");
+}
+
+

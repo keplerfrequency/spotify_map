@@ -123,6 +123,10 @@
     </div>
 
     <div id="playlist_repository" class="flex-child right">
+        <div id="search_bar">
+            <input type="text" id="search" oninput="searchPlaylist()" placeholder="Search through playlists">
+        </div>
+        
         <div id="spotify" >
             <div id="demo-agents">                    
                 <ul id="playlists" class="playlists"></ul>
@@ -131,6 +135,7 @@
     </div>
 
     <div id="spotifyplayerbeta" class="flex-child bottom">
+        
         <div id="seperator">
             <div id="donate_link"><a href="https://u24.gov.ua/" data-goatcounter-click="ext-u24.gov.ua/" target="_blank">Enjoying the website? Contribute here!</a></div>
         </div> 
@@ -142,7 +147,8 @@
         <script src="https://sdk.scdn.co/spotify-player.js"></script>
                 <script>
                 window.onSpotifyWebPlaybackSDKReady = () => {
-                    const token = 'BQCAp9r62Wr-vWwyreZgsEtI9BaqQQAyarAyBGBNjKAZRUw0z7uVLrsgQt11NqaWef0YqGEnZo2pYnqt66nRbzQU6FUakb0yXBhtomeBiGmNFdvZiXmYllY86YxwYY0e6cfUPg12xnPrXeavZVXiPWEDb_VOxFW_nlLTvRgywSQxblyRA5oEpvMHlGAE83Xd';
+                    //const token = 'BQCAp9r62Wr-vWwyreZgsEtI9BaqQQAyarAyBGBNjKAZRUw0z7uVLrsgQt11NqaWef0YqGEnZo2pYnqt66nRbzQU6FUakb0yXBhtomeBiGmNFdvZiXmYllY86YxwYY0e6cfUPg12xnPrXeavZVXiPWEDb_VOxFW_nlLTvRgywSQxblyRA5oEpvMHlGAE83Xd';
+                    const token = localStorage.getItem('token')
                     const player = new Spotify.Player({
                     name: 'Spotify map',
                     getOAuthToken: cb => { cb(token); },

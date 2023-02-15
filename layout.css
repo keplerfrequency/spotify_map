@@ -90,6 +90,12 @@
   cursor: pointer;
 }
 
+#search{
+  background-color:#272727;
+  outline: #00d755;
+  color: white;
+}
+
 /*FAQ*/
 #FAQ{
   position: absolute;

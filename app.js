@@ -1,7 +1,10 @@
 //Load the playlists when the window loads 
 window.onload = function() {
+  document.getElementById("search").value = "";
   displayPlaylists("playlists");
-}  
+  searchPlaylist;
+} 
+
 // This function creates the plalist cards for every playlist
 async function displayPlaylists(id){
   fetch('playlist.json')
@@ -87,3 +90,26 @@ window.addEventListener('click', (ev) => {
     iframe.src = link;
   }
 })
+
+
+//Search functionlaity
+function searchPlaylist() {
+  // Get the input value
+  var input = document.getElementById("search").value.toLowerCase();
+
+  // Get all playlist cards
+  var playlists = document.getElementsByClassName("playlist_card");
+
+  // Loop through each playlist card
+  for (var i = 0; i < playlists.length; i++) {
+    // Get the playlist name
+    var playlistName = playlists[i].getElementsByTagName("p")[0].innerHTML.toLowerCase();
+
+    // Check if the playlist name contains the input value
+    if (playlistName.includes(input)) {
+      playlists[i].classList.remove("not_searched")
+    } else {
+      playlists[i].classList.add("not_searched")
+    }
+  }
+}

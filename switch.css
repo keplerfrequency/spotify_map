@@ -82,3 +82,7 @@ input:checked + .slider:before {
 .hidden {
   display: none !important;
 }
+
+.not_searched{
+  display: none !important;
+}

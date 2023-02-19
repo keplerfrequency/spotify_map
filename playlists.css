@@ -36,10 +36,11 @@
   font-weight: bold;
 }
 
-.playlist_card p1 {
+.playlist_card p1{
   align-self: flex-start;
   color: #00d755;
-  align-self: flex-start;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .playlist_card:hover{

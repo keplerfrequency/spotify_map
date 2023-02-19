@@ -1,4 +1,4 @@
-//Load the playlists when the window loads 
+//Run a series of actions when the window loads 
 window.onload = function() {
   document.getElementById("search").value = "";
   
@@ -26,6 +26,7 @@ async function displayPlaylists(id){
       const container = document.createElement('li');
       
       container.setAttribute("id", country);
+      container.setAttribute("class", 'country');
 
       playlists.forEach(playlist => {
         const box = document.createElement('div');
@@ -68,10 +69,10 @@ async function displayPlaylists(id){
   });
 }
 
-//This function will toggle the spotify playlists
 document.addEventListener('DOMContentLoaded', function(){
   const playlistByValue = "Spotify";
 
+  //This function will toggle the spotify playlists
   document.querySelector("#toggle-button-spotify input").addEventListener("change", (ev) => {
     for (element of document.querySelectorAll(`[data-playlist-by='${playlistByValue}']`)) {
       element.classList.toggle("hidden", !ev.target.checked)
@@ -98,7 +99,6 @@ window.addEventListener('click', (ev) => {
   }
 })
 
-
 //Search functionlaity
 function searchPlaylist() {
   // Get the input value
@@ -121,8 +121,7 @@ function searchPlaylist() {
   }
 }
 
-
-
+//Show and close the pop up
 function showPopup() {
   var popup = document.getElementById("popup");
   popup.style.display = "block";
@@ -133,5 +132,4 @@ function closePopup() {
   popup.style.display = "none";
   localStorage.setItem("popupShown", "true");
 }
-
 

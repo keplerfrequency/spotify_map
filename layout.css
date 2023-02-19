@@ -119,27 +119,20 @@
 }
 
 /*Seperator (donation page)*/
-#seperator a{
+#seperator{
+  top: 10px;
   text-decoration: none;
   padding: 10px 10px;
   border-radius: 20px;
   background-color: #00d755;
   color: #272727;
   font-size: 20px;
-  transition: all 0.3s ease;
-  height: 30px;
+  height: 2px;
   display: flex; /* use flex layout */
   align-items: center; /* center the button vertically */
   justify-content: center; /* center the button horizontally */
   width: 99vw;
   position: absolute;
-}
-
-#seperator a:hover {
-  background: #ffd700 ;
-  background-size: 100% 100%;
-  color: #0057b7;
-  cursor: pointer;
 }
 
 /*FAQ*/
@@ -148,12 +141,28 @@
   bottom: 0;
   left: 0;
   width: 100vw;
-  height: 20px;
-  color: #00d755;
   text-align: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+#FAQ a, #FAQ p {
+  border: 1px solid black;
+  padding: 10px;
+  color: white;
+  border-radius: 20px;
+  height: 10px;
   background-color: #00d755;
 }
 
-#FAQ_text{
-  color: white;
+#FAQ_text:hover{
+  opacity: 0.8;
+}
+
+#info_text:hover {
+  background: #ffd700 ;
+  background-size: 100% 100%;
+  color: #0057b7;
+  cursor: pointer;
 }

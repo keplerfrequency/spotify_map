@@ -41,6 +41,8 @@
   color: #00d755;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-width: 90%;
+  display: inline-block; 
 }
 
 .playlist_card:hover{

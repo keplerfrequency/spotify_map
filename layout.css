@@ -118,7 +118,7 @@
   height: 200px;
 }
 
-/*Seperator (donation page)*/
+/*Seperator*/
 #seperator{
   top: 10px;
   text-decoration: none;
@@ -131,12 +131,13 @@
   display: flex; /* use flex layout */
   align-items: center; /* center the button vertically */
   justify-content: center; /* center the button horizontally */
-  width: 99vw;
+  width: 98.5vw;
   position: absolute;
 }
 
 /*FAQ*/
 #FAQ{
+  font-size: small;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -149,7 +150,7 @@
 
 #FAQ a, #FAQ p {
   border: 1px solid black;
-  padding: 10px;
+  padding: 5px;
   color: #272727;
   border-radius: 20px;
   height: 10px;

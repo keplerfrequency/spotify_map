@@ -37,17 +37,22 @@
 }
 
 #return{
+    position: fixed;
     text-decoration: none;
     padding: 10px 10px;
-    border-radius: 10px;
+    border-radius: 20px;
     background-color: #00d755;
     color: #fff;
     font-size: 20px;
     transition: all 0.3s ease;
-    height: 30px;
+    height: 20px;
     display: flex; /* use flex layout */
     align-items: center; /* center the button vertically */
     justify-content: center; /* center the button horizontally */
-    width: 98vw;
+    width: 97vw;
     position: absolute;
+  }
+
+  #return:hover{
+    opacity: 0.8;
   }

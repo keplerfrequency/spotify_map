@@ -6,7 +6,7 @@ window.onload = function() {
     showPopup();
   }   
   
-  displayPlaylists("playlists");
+  //displayPlaylists("playlists");
 } 
 
 // This function creates the plalist cards for every playlist

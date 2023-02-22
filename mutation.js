@@ -5,12 +5,12 @@ const observer = new MutationObserver(function(mutationsList) {
   
 const targetNode = document.getElementById('playlists');
 const config = { attributes: true, childList: true, subtree: true };
+let liElements = document.querySelectorAll('#playlists li');
 
 observer.observe(targetNode, config);
 
 function handleLiElements() {
 
-    let liElements = document.querySelectorAll('#playlists li');
 
     let allHidden = true;
 

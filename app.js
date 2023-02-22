@@ -66,6 +66,7 @@ async function displayPlaylists(id){
     const extraDiv = document.createElement('div');
     extraDiv.setAttribute('id', 'buffer_area');
     document.getElementById(id).appendChild(extraDiv);
+
   });
 }
 

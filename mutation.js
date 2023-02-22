@@ -1,20 +1,16 @@
-const targetNode = document.getElementsByClassName('country');
-
 const observer = new MutationObserver(function(mutationsList) {
-    console.log(1);
-    for(let mutation of mutationsList) {
-        if (mutation.type === 'subtree') {
-            console.log(mutation);
-        }
-  }
-});
+    console.log("mutation detected");
+    handleLiElements()
+  });
+  
+const targetNode = document.getElementById('playlists');
+const config = { attributes: true, childList: true, subtree: true };
 
-const config = { subtree: true,childList: true, attributes:true, characterData:true };
 observer.observe(targetNode, config);
 
- 
 function handleLiElements() {
-    const liElements = document.querySelectorAll('#playlists li');
+
+    let liElements = document.querySelectorAll('#playlists li');
 
     let allHidden = true;
 
@@ -32,4 +28,8 @@ function handleLiElements() {
     }
 
 }
+
+
+ 
+
   

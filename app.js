@@ -6,7 +6,7 @@ window.onload = function() {
     showPopup();
   }   
   
-  //displayPlaylists("playlists");
+  displayPlaylists("playlists");
 } 
 
 // This function creates the plalist cards for every playlist
@@ -66,6 +66,9 @@ async function displayPlaylists(id){
     const extraDiv = document.createElement('div');
     extraDiv.setAttribute('id', 'buffer_area');
     document.getElementById(id).appendChild(extraDiv);
+
+    var loadingMessage = document.getElementById('loading-message');
+    loadingMessage.style.display = 'none';
 
   });
 }

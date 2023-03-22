@@ -4,7 +4,11 @@ window.onload = function() {
   
   if (!localStorage.getItem("popupShown")) {
     showPopup();
-  }   
+  }
+  
+  args = parseArgs();
+    
+  localStorage.setItem(STORAGE_TOKEN_KEY, args.access_token);
   
   displayPlaylists("playlists");
 } 

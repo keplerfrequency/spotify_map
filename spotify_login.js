@@ -1,6 +1,12 @@
+const STORAGE_TOKEN_KEY = "token";
+
 //Go to Spotify login page
 function authorizeUser() {
-    var scopes = 'app-remote-control user-modify-playback-state streaming';
+    let scopes = [
+        'app-remote-control',
+        'user-modify-playback-state',
+        'streaming'
+    ]
 
     
     SPOTIFY_CLIENT_ID = '948c4e2f99254fcdbf7e8f9779da03b6'
@@ -8,13 +14,9 @@ function authorizeUser() {
     
     var url = 'https://accounts.spotify.com/authorize?client_id=' + SPOTIFY_CLIENT_ID +
     '&response_type=token' +
-    '&scope=' + encodeURIComponent(scopes) +
+    '&scope=' + encodeURIComponent(scopes.join(" ")) +
     '&redirect_uri=' + encodeURIComponent(SPOTIFY_REDIRECT_URI);
     document.location = url;
-
-    args = parseArgs();
-    
-    localStorage.setItem('token', args.access_token);
 
     return;
 }

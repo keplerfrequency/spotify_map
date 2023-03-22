@@ -37,8 +37,8 @@ function parseArgs() {
 //http://sortyourmusic.playlistmachinery.com/
 //On click of the login button call the authorize function to go to spotify and login
 window.addEventListener('click', (ev) => {
-    console.log(ev);
-    console.log(ev.target.classList)
+    //console.log(ev);
+    //console.log(ev.target.classList)
     if(ev.target.classList.contains('login_div') || ev.target.classList.contains('login_text')){
         console.log('authorizing user now!')
         authorizeUser();

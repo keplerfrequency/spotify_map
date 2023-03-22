@@ -89,6 +89,13 @@ document.addEventListener('DOMContentLoaded', function(){
       element.classList.toggle("hidden", !ev.target.checked)
     }
   })
+
+  var searchInput = document.getElementById("search");
+
+  searchInput.addEventListener("input", function() {
+    searchPlaylist();
+  });
+
 })
 
 //This code places the href from the playlist into the embedded player upon image click
@@ -105,24 +112,28 @@ window.addEventListener('click', (ev) => {
 
 //Search functionlaity
 function searchPlaylist() {
+  console.log("Starting to search playlists");
+
   // Get the input value
-  var input = document.getElementById("search").value.toLowerCase();
-
-  // Get all playlist cards
-  var playlists = document.getElementsByClassName("playlist_card");
-
+  let input = document.getElementById("search").value.toLowerCase();
+  console.log("Selected search element ");
+  
   // Loop through each playlist card
-  for (var i = 0; i < playlists.length; i++) {
-    // Get the playlist name
-    var playlistName = playlists[i].getElementsByTagName("p")[0].innerHTML.toLowerCase();
+  let playlists = $(document).find('.playlist_card');
+  console.log(" Found " + playlists.length + " playlists")
+  playlists.each(function(index) {
+    let element = this;
 
-    // Check if the playlist name contains the input value
+    let playlistName = $(element).find('p').eq(0).html().toLowerCase();
     if (playlistName.includes(input)) {
-      playlists[i].classList.remove("not_searched")
+      $(element).removeClass('not_searched');
     } else {
-      playlists[i].classList.add("not_searched")
+      $(element).addClass('not_searched');
     }
-  }
+
+  });
+  console.log("Finished refresh of page ");
+  
 }
 
 //Show and close the pop up

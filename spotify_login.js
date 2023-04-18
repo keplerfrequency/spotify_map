@@ -4,6 +4,8 @@ const STORAGE_TOKEN_KEY = "token";
 function authorizeUser() {
     let scopes = [
         'streaming',
+        'app-remote-control',
+        'user-modify-playback-state',
     ]
 
     

@@ -48,6 +48,7 @@ async function displayPlaylists(id){
         const img = document.createElement('img');
         img.setAttribute("class", "playlist-img");
         img.setAttribute("loading", "lazy");
+        img.setAttribute("style", "background-color: " + randomHSLA());
         img.setAttribute("src", playlist.img);
         img.setAttribute("data-href", playlist.link);
         a.appendChild(img);
@@ -128,6 +129,11 @@ window.addEventListener('click', (ev) => {
     
   }
 })
+
+//This function generates a random pastel color 
+function randomHSLA(){
+  return `hsla(${~~(360 * Math.random())}, 70%,  72%, 0.8)`
+}
 
 //Search functionlaity
 function searchPlaylist() {

@@ -14,6 +14,11 @@ window.onload = function() {
   //This section gets the key and cleans up the key in the URL
   args = parseArgs();
   clearUrl();
+
+  //if args is not empty then remove the div with the login button
+  if (Object.keys(args).length == 0) {
+    document.getElementById("login").remove();
+  }
   
   localStorage.setItem(STORAGE_TOKEN_KEY, args.access_token);
   

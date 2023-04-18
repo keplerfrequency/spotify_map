@@ -1,3 +1,7 @@
+//global params
+var parent_element;
+
+
 //Run a series of actions when the window loads 
 window.onload = function() {
   document.getElementById("search").value = "";
@@ -102,15 +106,26 @@ document.addEventListener('DOMContentLoaded', function(){
 
 })
 
-//This code places the href from the playlist into the embedded player upon image click
+//This code places the href from the playlist into the embedded player upon image click and changes color of playlist_card
 window.addEventListener('click', (ev) => {
   if(ev.target.classList.contains('playlist-img')){
     const iframe = document.querySelector('#embedded_player'); 
     const clicked_item = ev.target;
 
+    
     let link = clicked_item.getAttribute('data-href')
     link = link.replace('playlist', 'embed/playlist')+"?utm_source=generator&theme=0";
     iframe.src = link;
+
+    try{
+      parent_element.style.backgroundColor =  "#181818";
+    }catch(err){
+    }
+       
+    //Get the parent element of the clicked item
+    parent_element = clicked_item.parentElement.parentElement;
+    parent_element.style.backgroundColor = "#6b6b6b";
+    
   }
 })
 

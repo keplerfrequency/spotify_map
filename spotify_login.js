@@ -59,5 +59,6 @@ function clearUrl(){
     if (index > 0) {
         url = url.substring(0, index);
         window.history.pushState({}, document.title, url);
+        document.getElementById("login").remove();
     }
 }

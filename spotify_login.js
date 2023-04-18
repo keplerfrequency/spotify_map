@@ -50,3 +50,14 @@ window.addEventListener('click', (ev) => {
     }
 
 });
+
+
+//This function will clear any characters in the url that come after the # sign
+function clearUrl(){
+    var url = window.location.href;
+    var index = url.indexOf('#');
+    if (index > 0) {
+        url = url.substring(0, index);
+        window.history.pushState({}, document.title, url);
+    }
+}

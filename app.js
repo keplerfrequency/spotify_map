@@ -10,8 +10,11 @@ window.onload = function() {
     showPopup();
   }
   
+
+  //This section gets the key and cleans up the key in the URL
   args = parseArgs();
-    
+  clearUrl();
+  
   localStorage.setItem(STORAGE_TOKEN_KEY, args.access_token);
   
   displayPlaylists("playlists");

@@ -64,7 +64,7 @@ async function displayPlaylists(id){
         box.dataset.playlistBy = playlist.playlist_by;
         
         const div = document.createElement('div');
-        div.textContent = playlist.description;
+        div.textContent = decodeHtml(playlist.description);
         div.setAttribute("class", "playlist_description")
         box.appendChild(div)
 
@@ -134,6 +134,16 @@ window.addEventListener('click', (ev) => {
 function randomHSLA(){
   return `hsla(${~~(360 * Math.random())}, 70%,  72%, 0.8)`
 }
+
+
+//This function takes a string and converts the html characters into normal characters and returns the string
+function decodeHtml(html) {
+  var txt = document.createElement("textarea");
+  txt.innerHTML = html;
+  return txt.value;
+}
+
+  
 
 //Search functionlaity
 function searchPlaylist() {

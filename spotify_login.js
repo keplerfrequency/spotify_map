@@ -3,21 +3,22 @@ const STORAGE_TOKEN_KEY = "token";
 //Go to Spotify login page
 function authorizeUser() {
     let scopes = [
-        'app-remote-control',
-        'user-modify-playback-state',
-        'streaming'
+        'streaming',
     ]
 
     
     SPOTIFY_CLIENT_ID = '948c4e2f99254fcdbf7e8f9779da03b6'
-    SPOTIFY_REDIRECT_URI = 'http://127.0.0.1:5500/index.html'
+    SPOTIFY_REDIRECT_URI = 'https://keplerfrequency.github.io/spotify_map'
     
-    var url = 'https://accounts.spotify.com/authorize?client_id=' + SPOTIFY_CLIENT_ID +
-    '&response_type=token' +
-    '&scope=' + encodeURIComponent(scopes.join(" ")) +
-    '&redirect_uri=' + encodeURIComponent(SPOTIFY_REDIRECT_URI);
-    document.location = url;
 
+var scope = scopes.join(" ")
+
+var url = 'https://accounts.spotify.com/authorize';
+url += '?response_type=token';
+url += '&client_id=' + encodeURIComponent(SPOTIFY_CLIENT_ID);
+url += '&scope=' + encodeURIComponent(scope);
+url += '&redirect_uri=' + encodeURIComponent(SPOTIFY_REDIRECT_URI);
+document.location = url;
     return;
 }
 

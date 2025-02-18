@@ -96,28 +96,29 @@ def process_response(country):
 
         #See response format here: https://developer.spotify.com/console/get-search-item/
         for item in data['playlists']['items']:
-            if 'external_urls' in item:
-                urls = item["external_urls"]['spotify']
-            if 'owner' in item:
-                display_name = item["owner"]["display_name"]
-            if 'name' in item:
-                name= item["name"]
+            if item:
+                if 'external_urls' in item:
+                    urls = item["external_urls"]['spotify']
+                if 'owner' in item:
+                    display_name = item["owner"]["display_name"]
+                if 'name' in item:
+                    name= item["name"]
 
-            #Not obligatory, so should check if it is there
-            if 'images' in item:
-                try:
-                    img = item["images"][0]['url']
-                except:
-                    img = "https://storage.googleapis.com/pr-newsroom-wp/1/2023/01/AppleCompetition-FTRHeader_V1-1-300x171.png"
-            
-            if 'description' in item:
-                description =  item["description"]
-                if description == "":
-                    description = "No description"
+                #Not obligatory, so should check if it is there
+                if 'images' in item:
+                    try:
+                        img = item["images"][0]['url']
+                    except:
+                        img = "https://storage.googleapis.com/pr-newsroom-wp/1/2023/01/AppleCompetition-FTRHeader_V1-1-300x171.png"
+                
+                if 'description' in item:
+                    description =  item["description"]
+                    if description == "":
+                        description = "No description"
 
 
-            array = [country, urls, display_name, name, img, description]
-            list_of_playlists.append(array)
+                array = [country, urls, display_name, name, img, description]
+                list_of_playlists.append(array)
 
     except Exception as e:
         print(e) 

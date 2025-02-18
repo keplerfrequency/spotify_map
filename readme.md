@@ -66,7 +66,6 @@ You will need a Spotify account to play the music fully. You should be able to l
 
 For any questions or to report bugs, please contact:
 - Email: keplerfrequency@gmail.com
-- GitHub: [Insert GitHub Link]
 
 ## Contributing
 
@@ -74,7 +73,7 @@ Contributions are welcome! Please fork the repository and submit a pull request 
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
 
 ## Acknowledgments
 

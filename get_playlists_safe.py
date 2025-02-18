@@ -31,6 +31,7 @@ PLAYLIST_METADATA = 6
 # List of EU countries and pruned list
 EUROPE_COUNTRIES_OG = ["albania","andorra","austria","belarus","belgium","bosnia and herzegovina","bulgaria","croatia","cyprus","czech republic","denmark","estonia","france","finland","georgia","germany","greece","hungary","iceland","ireland","san marino","italy","kosovo","latvia","liechtenstein","lithuania","luxembourg","macedonia","malta", "moldova","monaco","montenegro","netherlands","norway","poland","portugal","romania","russian federation","serbia","slovakia","slovenia","spain","sweden","switzerland","turkey","ukraine","england", "isle of man", "northern ireland", "scotland", "wales"]
 EUROPE_COUNTRIES = ["albania","andorra","austria","belarus","belgium","bosnia and herzegovina","bulgaria","croatia","cyprus","czech republic","denmark","estonia","france","finland","georgia","germany","greece","hungary","iceland","ireland","italy","kosovo","latvia","lithuania","luxembourg","macedonia","malta", "moldova","montenegro","netherlands","norway","poland","portugal","romania","russian federation","serbia","slovakia","slovenia","spain","sweden","switzerland","turkey","ukraine","england", "isle of man", "northern ireland", "scotland", "wales"]
+TEST_COUNTRY = ["slovenia"]
 
 ######################################################################################################################
 
@@ -190,8 +191,14 @@ def add_spotify_playlists():
 
     with open(PLAYLIST_JSON, 'r', encoding='utf-8') as file:
         data2 = json.load(file)
-        
-    data2['countries'].append(data)
+
+    # Get the relevant playlists
+    countries = data.get("countries", [])
+
+    if "countries" not in data2:
+        data2['countries'].append(data)
+    
+    data2["countries"].extend(countries)
 
     with open(PLAYLIST_JSON, 'w', encoding='utf-8') as file:
         json.dump(data2, file, indent=4, ensure_ascii=False)

@@ -13,16 +13,26 @@ config.read('config.ini')
 CLIENT_ID = config.get('keys', 'CLIENT_ID')
 CLIENT_SECRET = config.get('keys', 'CLIENT_SECRET')
 
-#Output JSON is where the response from spotify is temporarily stored and then removed 
+# Output JSON is where the response from spotify is temporarily stored and then removed 
 OUTPUT_JSON = "test_output_playlists.json"
-#Playlist.json file is where all the playlists are stored. the temp is a temp file that then overwrites the other one
+# Playlist.json file is where all the playlists are stored 
+# temp is a temp file that then overwrites the other one
+# Spotify playslists is where the playlists owned by spotify are
 PLAYLIST_JSON = "playlist.json"
 TEMP_PLAYLIST_JSON = "temp_playlist.json"
-NUMBER_OF_PLAYLISTS = 250
-PLAYLIST_METADATA = 6
-EUROPE_COUNTRIES_OG = ["albania","andorra","austria","belarus","belgium","bosnia and herzegovina","bulgaria","croatia","cyprus","czech republic","denmark","estonia","france","finland","georgia","germany","greece","hungary","iceland","ireland","san marino","italy","kosovo","latvia","liechtenstein","lithuania","luxembourg","macedonia","malta", "moldova","monaco","montenegro","netherlands","norway","poland","portugal","romania","russian federation","serbia","slovakia","slovenia","spain","sweden","switzerland","turkey","ukraine","england", "isle of man", "northern ireland", "scotland", "wales"]
+SPOTIFY_PLAYLISTS = "spotify_filtered_playlists.json"
 
+# Number of playlists to query per country
+NUMBER_OF_PLAYLISTS = 250
+
+# Number of parameters to be kept
+PLAYLIST_METADATA = 6
+
+# List of EU countries and pruned list
+EUROPE_COUNTRIES_OG = ["albania","andorra","austria","belarus","belgium","bosnia and herzegovina","bulgaria","croatia","cyprus","czech republic","denmark","estonia","france","finland","georgia","germany","greece","hungary","iceland","ireland","san marino","italy","kosovo","latvia","liechtenstein","lithuania","luxembourg","macedonia","malta", "moldova","monaco","montenegro","netherlands","norway","poland","portugal","romania","russian federation","serbia","slovakia","slovenia","spain","sweden","switzerland","turkey","ukraine","england", "isle of man", "northern ireland", "scotland", "wales"]
 EUROPE_COUNTRIES = ["albania","andorra","austria","belarus","belgium","bosnia and herzegovina","bulgaria","croatia","cyprus","czech republic","denmark","estonia","france","finland","georgia","germany","greece","hungary","iceland","ireland","italy","kosovo","latvia","lithuania","luxembourg","macedonia","malta", "moldova","montenegro","netherlands","norway","poland","portugal","romania","russian federation","serbia","slovakia","slovenia","spain","sweden","switzerland","turkey","ukraine","england", "isle of man", "northern ireland", "scotland", "wales"]
+
+######################################################################################################################
 
 #Do a search of the playslists
 def get_playlists(query, type, market, offset):
@@ -172,6 +182,23 @@ def fill_playlist_json(list_of_all_playlists):
 
     return
 
+# Spotify breaking balls and not showing their own playlists anymore. Add from previous queries
+def add_spotify_playlists():
+    
+    with open(SPOTIFY_PLAYLISTS, 'r', encoding='utf-8') as file:
+        data = json.load(file)
+
+    with open(PLAYLIST_JSON, 'r', encoding='utf-8') as file:
+        data2 = json.load(file)
+        
+    data2['countries'].append(data)
+
+    with open(PLAYLIST_JSON, 'w', encoding='utf-8') as file:
+        json.dump(data2, file, indent=4, ensure_ascii=False)
+
+    return
+
+# Generate a serach query for each country - includes alternative names for countries
 def get_country_search_term(country):
 
     europe_countries_search_term = ["albania","andorra","osterreich austria","belarus","belgium","bosnia and herzegovina","bulgaria","croatia hrvatska","cyprus","czech republic","denmark dansk","estonia","france","finland","georgia","germany","greece Ελληνική","hungary magyar","iceland island","ireland","italia","kosovo","latvia","lithuania","luxembourg","macedonia","malta", "moldova","montenegro","netherlands","norway norske","poland polskie","portugal","romania","russia","serbia","slovakia","slovenia","espana","sweden svensk","switzerland","turkey","ukraine","england", "isle of man", "northern ireland", "scotland", "wales"]
@@ -203,17 +230,15 @@ def main():
                     print(e)
 
 
-
-
-    #fill the list with all the playlists
+    # Fill the list with all the playlists
     fill_playlist_json(list_of_all_playlists)
-
 
 
     if os.path.exists(TEMP_PLAYLIST_JSON):
         shutil.copyfile(TEMP_PLAYLIST_JSON, PLAYLIST_JSON)    
         os.remove(TEMP_PLAYLIST_JSON)
     
+    add_spotify_playlists()
 
 if __name__ == '__main__':
     main()

@@ -24,7 +24,6 @@ EUROPE_COUNTRIES_OG = ["albania","andorra","austria","belarus","belgium","bosnia
 
 EUROPE_COUNTRIES = ["albania","andorra","austria","belarus","belgium","bosnia and herzegovina","bulgaria","croatia","cyprus","czech republic","denmark","estonia","france","finland","georgia","germany","greece","hungary","iceland","ireland","italy","kosovo","latvia","lithuania","luxembourg","macedonia","malta", "moldova","montenegro","netherlands","norway","poland","portugal","romania","russian federation","serbia","slovakia","slovenia","spain","sweden","switzerland","turkey","ukraine","england", "isle of man", "northern ireland", "scotland", "wales"]
 
-
 #Do a search of the playslists
 def get_playlists(query, type, market, offset):
 
@@ -44,7 +43,7 @@ def get_playlists(query, type, market, offset):
             pass
     
     else:
-        print(" . This country had no market support. Will try with no market.", end="")
+        print(" This country had no market support. Will try with no market.", end="")
         try:
             response = spotify.search(query, 50, offset*50, type)
             print(" {} has succeeded. Search number {}".format(query, offset+1))
@@ -103,6 +102,7 @@ def process_response(country):
                     display_name = item["owner"]["display_name"]
                 if 'name' in item:
                     name= item["name"]
+                    
 
                 #Not obligatory, so should check if it is there
                 if 'images' in item:
@@ -196,10 +196,11 @@ def main():
 
             batch_of_playlists = process_response(country)
             
-            try:
-                list_of_all_playlists = np.vstack((list_of_all_playlists, batch_of_playlists))
-            except Exception as e:
-                print(e)
+            if (batch_of_playlists):
+                try:
+                    list_of_all_playlists = np.vstack((list_of_all_playlists, batch_of_playlists))
+                except Exception as e:
+                    print(e)
 
 
 

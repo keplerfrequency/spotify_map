@@ -10,7 +10,7 @@ function authorizeUser() {
 
     
     SPOTIFY_CLIENT_ID = '948c4e2f99254fcdbf7e8f9779da03b6'
-    SPOTIFY_REDIRECT_URI = 'https://keplerfrequency.github.io/spotify_map'
+    SPOTIFY_REDIRECT_URI = 'https://spotifymaps.com'
     
 
 var scope = scopes.join(" ")

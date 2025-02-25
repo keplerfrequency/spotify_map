@@ -200,6 +200,9 @@ def add_spotify_playlists():
     
     data2["countries"].extend(countries)
 
+    #reverse the data so spotify playlists are on top
+    data2["countries"] = data2["countries"][::-1]
+
     with open(PLAYLIST_JSON, 'w', encoding='utf-8') as file:
         json.dump(data2, file, indent=4, ensure_ascii=False)
 
@@ -246,6 +249,8 @@ def main():
         os.remove(TEMP_PLAYLIST_JSON)
     
     add_spotify_playlists()
+
+
 
 if __name__ == '__main__':
     main()
